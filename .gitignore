@@ -1,6 +1,8 @@
 # env
 .env
+.env-ecs
 env.d/aws
+ecs/ecs-params.yml
 
 # virtualenv
 .venv
