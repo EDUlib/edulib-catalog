@@ -1,0 +1,24 @@
+version: '3'
+services:
+  nginx:
+    image: 344665936665.dkr.ecr.us-east-2.amazonaws.com/edulib-nginx
+    ports:
+      - "80:80"
+    logging:
+      driver: awslogs
+      options:
+        awslogs-group: portal
+        awslogs-region: us-east-2
+        awslogs-stream-prefix: nginx
+
+  app:
+    image: 344665936665.dkr.ecr.us-east-2.amazonaws.com/edulib-portal-test
+    env_file: "../.env-ecs"
+    ports:
+      - "8000:8000"
+    logging:
+      driver: awslogs
+      options:
+        awslogs-group: portal
+        awslogs-region: us-east-2
+        awslogs-stream-prefix: richie-app
