@@ -102,4 +102,5 @@ CMD dockerize -wait tcp://db:5432 -timeout 60s \
 FROM core as production
 
 # The default command runs gunicorn WSGI server in the sandbox
-CMD gunicorn -c /usr/local/etc/gunicorn/funmooc.py funmooc.wsgi:application
+CMD gunicorn -c /usr/local/etc/gunicorn/funmooc.py funmooc.wsgi:application \
+&& python manage.py bootstrap_elasticsearch

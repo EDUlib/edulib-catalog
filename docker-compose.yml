@@ -1,55 +1,30 @@
 version: "3.4"
 
 services:
-  db:
-    image: postgres:9.6
-    env_file:
-      - "env.d/development"
-    ports:
-      - "5440:5432"
-
   elasticsearch:
     image: fundocker/openshift-elasticsearch:6.6.2
     env_file:
-      - "env.d/development"
+      - ".env"
     ports:
-      - "9220:9200"
+      - "9200:9200"
 
   app:
-    build:
-      context: .
-      target: development
-      args:
-        DOCKER_USER: ${DOCKER_USER:-1000}
-    image: "funmooc:development"
-    env_file: "env.d/development"
-    ports:
-      - "8080:8000"
-    volumes:
-      - ./src/backend:/app
-      - ./data/static:/data/static
-      - ./data/media:/data/media
-    depends_on:
-      - "db"
-      - "elasticsearch"
-
-  app-ci:
     build:
       context: .
       target: production
       args:
         DOCKER_USER: ${DOCKER_USER:-1000}
-    # We tag our images with the current commit sha1 in the CI to make them
-    # unique and avoid collisions in parallel builds.
-    image: "funmooc:${CIRCLE_SHA1:-ci}"
-    env_file:
-      - env.d/development
-      - env.d/ci
+    image: "funmooc"
+    env_file: ".env"
     ports:
       - "8000:8000"
+    volumes:
+      - ./src/backend:/app
+      - ./data/static:/data/static
+      - ./data/media:/data/media
     depends_on:
-      - "db"
       - "elasticsearch"
+      - "nginx"
 
   node:
     image: circleci/node:10
@@ -65,3 +40,10 @@ services:
     working_dir: /app
     volumes:
       - ./src/aws:/app
+
+  nginx:
+    image: nginx:1.12.2
+    ports:
+      - "80:80"
+    volumes:
+      - ./docker/files/usr/local/etc/nginx/conf.d:/etc/nginx/conf.d:ro

@@ -5,6 +5,7 @@ django-configurations==2.1
 django-storages==1.6.3
 dockerflow==2019.6.0
 gunicorn==19.9.0
+mysqlclient==1.4.2.post1
 psycopg2-binary==2.7.7
 richie==1.8.3
 sentry-sdk==0.9.5

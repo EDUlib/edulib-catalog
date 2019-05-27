@@ -21,12 +21,7 @@ COMPOSE_RUN_NODE     = $(COMPOSE_RUN) -e HOME="/tmp" node
 YARN                 = $(COMPOSE_RUN_NODE) yarn
 
 # -- Django
-MANAGE = $(COMPOSE_RUN_APP) dockerize \
-	-wait tcp://db:5432 \
-	-wait tcp://elasticsearch:9200 \
-	-timeout 60s \
-		python manage.py
-MANAGE_CI = $(COMPOSE_RUN_CI) python manage.py
+MANAGE = $(COMPOSE_RUN_APP) python manage.py
 
 # -- Rules
 default: help
@@ -90,6 +85,9 @@ watch-sass: ## watch changes in Sass files
 # == AWS/Terraform
 env.d/aws:
 	cp env.d/aws.dist env.d/aws
+
+ecs/ecs-params:
+	cp ecs/ecs-params.yml.dist ecs/ecs-params.yml
 
 # == Django
 check: ## perform django checks
