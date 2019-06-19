@@ -1,0 +1,12 @@
+[
+  {
+    "id": "components.SearchSuggestField.searchFieldDefaultSearch",
+    "description": "Default query in the main search field. Lets users run a full text search\n      with whatever they have typed in.",
+    "defaultMessage": "Search for {query} in courses..."
+  },
+  {
+    "id": "components.SearchSuggestField.searchFieldPlaceholder",
+    "description": "Placeholder text displayed in the search field when it is empty.",
+    "defaultMessage": "Search for courses, organizations, categories"
+  }
+]

@@ -1,0 +1,22 @@
+[
+  {
+    "id": "components.CourseGlimpse.logoAltText",
+    "description": "Alternate text for the course logo in a course glimpse.",
+    "defaultMessage": "Logo for {courseTitle}"
+  },
+  {
+    "id": "components.CourseGlimpse.cover",
+    "description": "Placeholder text when the course we are glimpsing at is missing a cover image",
+    "defaultMessage": "Cover"
+  },
+  {
+    "id": "components.CourseGlimpse.startsOn",
+    "description": "Shows the start date for a course in a course glimpse in a short format such as Sep 4, '1986'",
+    "defaultMessage": "Starts on {date}"
+  },
+  {
+    "id": "components.CourseGlimpse.linkText",
+    "description": "Accessibility title for links on course glimpses.",
+    "defaultMessage": "Details page for {courseTitle}."
+  }
+]

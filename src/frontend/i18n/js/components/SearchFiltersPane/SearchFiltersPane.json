@@ -1,0 +1,12 @@
+[
+  {
+    "id": "components.SearchFiltersPane.clearFilters",
+    "description": "Helper button in search filters pane in search page to remove all active filters",
+    "defaultMessage": "Clear {activeFilterCount, number} active {activeFilterCount, plural, one {filter} other {filters}}"
+  },
+  {
+    "id": "components.SearchFiltersPane.title",
+    "description": "Title for the search filters pane in course search.",
+    "defaultMessage": "Filter courses"
+  }
+]
