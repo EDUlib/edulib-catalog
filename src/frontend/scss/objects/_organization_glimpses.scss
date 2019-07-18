@@ -12,7 +12,7 @@ $richie-org-glimpse-item-gutter: 0.625rem !default;
 $richie-org-glimpse-item-padding: 1.25rem !default;
 $richie-org-glimpse-item-background: $white !default;
 $richie-org-glimpse-item-border: 1px solid $gray80 !default;
-$richie-org-glimpse-item-border-hover: 1px solid $firebrick6 !default;
+$richie-org-glimpse-item-border-hover: 1px solid $edulib5 !default;
 $richie-org-glimpse-item-border-radius: 0.25rem !default;
 
 $richie-org-glimpse-item-title-fontcolor: $black !default;
@@ -53,7 +53,7 @@ $richie-org-glimpse-item-empty-textalign: left !default;
   display: flex;
   flex-grow: 0;
   flex-shrink: 0;
-  flex-basis: calc(100% - #{$richie-org-glimpse-item-gutter * 2});
+  flex-basis: calc(50% - #{$richie-org-glimpse-item-gutter * 2});
   margin: $richie-org-glimpse-item-gutter;
   padding: $richie-org-glimpse-item-padding;
   flex-direction: column;
@@ -64,17 +64,28 @@ $richie-org-glimpse-item-empty-textalign: left !default;
   border-radius: $richie-org-glimpse-item-border-radius;
 
   @include media-breakpoint-up(sm) {
-    flex-basis: calc(50% - #{$richie-org-glimpse-item-gutter * 2});
+    flex-basis: calc(33% - #{$richie-org-glimpse-item-gutter * 2});
   }
 
   @include media-breakpoint-up(xl) {
     flex-basis: calc(25% - #{$richie-org-glimpse-item-gutter * 2});
   }
 
+  &__small {
+    flex-basis: calc(33% - #{$richie-org-glimpse-item-gutter * 2});
+
+    @include media-breakpoint-up(sm) {
+      flex-basis: calc(25% - #{$richie-org-glimpse-item-gutter * 2});
+    }
+
+    @include media-breakpoint-up(xl) {
+      flex-basis: calc(20% - #{$richie-org-glimpse-item-gutter * 2});
+    }
+  }
+
   &__logo {
     position: relative;
     width: 100%;
-    margin-bottom: 1rem;
     padding-bottom: 56.25%; // Aspect ratio 16/9
 
     & > img {

@@ -56,11 +56,11 @@ $richie-blogpost-detail-title-textalign: center !default;
         @include sv-flex(1, 0, 1.5rem);
         height: 1.5rem;
         font-size: 0.8rem;
-        background: $dodgerblue1;
+        background: $edulib5;
 
         &:hover {
-          color: $white;
-          background: $dodgerblue3;
+          color: $edulib5;
+          background: $white;
           text-decoration: none;
         }
 

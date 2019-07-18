@@ -17,7 +17,7 @@ $richie-blogpost-glimpse-container-width-xl: 25% !default;
 $richie-blogpost-glimpse-container-gutter: 0.5rem !default;
 $richie-blogpost-glimpse-container-background: $white !default;
 $richie-blogpost-glimpse-container-border: 1px solid $gray80 !default;
-$richie-blogpost-glimpse-container-border-hover: 1px solid $firebrick6 !default;
+$richie-blogpost-glimpse-container-border-hover: 1px solid $edulib5 !default;
 $richie-blogpost-glimpse-container-border-radius: 0.25rem !default;
 
 $richie-blogpost-glimpse-media-width: null !default;
@@ -40,7 +40,7 @@ $richie-blogpost-glimpse-content-textalign: center !default;
 $richie-blogpost-glimpse-title-margin: 0 0 0.1rem !default;
 $richie-blogpost-glimpse-title-fontsize: 0.9rem !default;
 $richie-blogpost-glimpse-title-fontweight: bold !default;
-$richie-blogpost-glimpse-title-fontcolor: $dodgerblue3 !default;
+$richie-blogpost-glimpse-title-fontcolor: $edulib1 !default;
 
 $richie-blogpost-glimpse-wrapper-padding: 0.6rem 0.2rem !default;
 
@@ -61,8 +61,8 @@ $richie-blogpost-glimpse-foot-cta-fontsize: 0.9rem !default;
 $richie-blogpost-glimpse-foot-cta-fontweight: bold !default;
 $richie-blogpost-glimpse-foot-cta-fontcolor: $white !default;
 $richie-blogpost-glimpse-foot-cta-textalign: center !default;
-$richie-blogpost-glimpse-foot-cta-background: $dodgerblue5 !default;
-$richie-blogpost-glimpse-foot-cta-background-hover: $firebrick6 !default;
+$richie-blogpost-glimpse-foot-cta-background: $edulib3 !default;
+$richie-blogpost-glimpse-foot-cta-background-hover: $edulib5 !default;
 
 .blogpost-glimpse-list {
   @if $richie-blogpost-glimpse-list-maxwidth-constraint {

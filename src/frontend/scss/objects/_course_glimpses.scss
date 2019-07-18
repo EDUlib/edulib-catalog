@@ -16,9 +16,9 @@ $richie-course-glimpse-container-width-xl: 25% !default;
 $richie-course-glimpse-container-gutter: 0.5rem !default;
 $richie-course-glimpse-container-background: $white !default;
 $richie-course-glimpse-container-border: 1px solid $gray80 !default;
-$richie-course-glimpse-container-border-hover: 1px solid $firebrick6 !default;
+$richie-course-glimpse-container-border-hover: 1px solid $edulib5 !default;
 
-$richie-course-glimpse-media-margin: 0 0 1rem 0 !default;
+$richie-course-glimpse-media-margin: 0 !default;
 
 $richie-course-glimpse-caption-width: 60% !default;
 $richie-course-glimpse-caption-margin: 0 !default;
@@ -36,7 +36,7 @@ $richie-course-glimpse-content-textalign: center !default;
 
 $richie-course-glimpse-title-fontsize: 1rem !default;
 $richie-course-glimpse-title-fontweight: bold !default;
-$richie-course-glimpse-title-fontcolor: $dodgerblue3 !default;
+$richie-course-glimpse-title-fontcolor: $edulib1 !default;
 
 $richie-course-glimpse-wrapper-padding: 0.6rem !default;
 
@@ -57,8 +57,8 @@ $richie-course-glimpse-foot-cta-fontsize: 0.9rem !default;
 $richie-course-glimpse-foot-cta-fontweight: bold !default;
 $richie-course-glimpse-foot-cta-fontcolor: $white !default;
 $richie-course-glimpse-foot-cta-textalign: center !default;
-$richie-course-glimpse-foot-cta-background: $dodgerblue5 !default;
-$richie-course-glimpse-foot-cta-background-hover: $firebrick6 !default;
+$richie-course-glimpse-foot-cta-background: $edulib3 !default;
+$richie-course-glimpse-foot-cta-background-hover: $edulib5 !default;
 
 .course-glimpse-list {
   @if $richie-course-glimpse-list-maxwidth-constraint {
@@ -146,6 +146,7 @@ $richie-course-glimpse-foot-cta-background-hover: $firebrick6 !default;
   &__footer {
     display: flex;
     border-top: $richie-course-glimpse-foot-border;
+    min-height: 3.25rem;
 
     &__date {
       @include sv-flex-cell-width(auto);
@@ -180,7 +181,7 @@ $richie-course-glimpse-foot-cta-background-hover: $firebrick6 !default;
   &:focus {
     border: $richie-course-glimpse-container-border-hover;
 
-    #{$glimpse-item-selector}__foot__cta .button {
+    #{$glimpse-item-selector}__footer__cta .button {
       background: $richie-course-glimpse-foot-cta-background-hover;
     }
   }

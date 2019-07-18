@@ -41,6 +41,7 @@ $richie-section-cadenced-title-padding: 1rem !default;
     display: flex;
     flex-wrap: wrap;
     margin: 0 -0.5rem;
+    justify-content: center;
 
     // Some elements have to take 100% by default
     .section-container-cadenced & > p,

@@ -14,7 +14,7 @@ $richie-person-glimpse-container-border: 1px solid $gray80 !default;
 $richie-person-glimpse-container-background: $white !default;
 $richie-person-glimpse-container-divider: 1rem !default;
 
-$richie-person-glimpse-content-title-fontcolor: $dodgerblue5 !default;
+$richie-person-glimpse-content-title-fontcolor: $edulib1 !default;
 $richie-person-glimpse-content-title-textalign: center !default;
 $richie-person-glimpse-content-title-textalign-lg: left !default;
 
@@ -100,6 +100,7 @@ $richie-person-glimpse-caption-background: $gray80 !default;
   }
 
   &__content__wrapper__categories {
+    display: flex;
     margin-bottom: 0.6rem;
     text-align: $richie-person-glimpse-content-title-textalign;
     @include media-breakpoint-up(lg) {
