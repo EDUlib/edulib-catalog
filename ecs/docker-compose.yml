@@ -1,7 +1,7 @@
 version: '3'
 services:
   nginx:
-    image: 344665936665.dkr.ecr.us-east-2.amazonaws.com/edulib-nginx
+    image: 344665936665.dkr.ecr.us-east-2.amazonaws.com/ed-hq-portal-nginx
     ports:
       - "80:80"
     logging:
@@ -12,7 +12,7 @@ services:
         awslogs-stream-prefix: nginx
 
   app:
-    image: 344665936665.dkr.ecr.us-east-2.amazonaws.com/edulib-portal-test
+    image: 344665936665.dkr.ecr.us-east-2.amazonaws.com/ed-hq-portal-test
     env_file: "../.env-ecs"
     ports:
       - "8000:8000"
