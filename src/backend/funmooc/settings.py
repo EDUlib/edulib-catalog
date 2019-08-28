@@ -399,6 +399,7 @@ class Base(DRFMixin, RichieCoursesConfigurationMixin, Configuration):
                     "BlogPostPlugin",
                     "CoursePlugin",
                     "CategoryPlugin",
+                    "CKEditorPlugin",
                     "LinkPlugin",
                     "OrganizationPlugin",
                     "PersonPlugin",
@@ -420,6 +421,7 @@ class Base(DRFMixin, RichieCoursesConfigurationMixin, Configuration):
                 "SectionPlugin": [
                     "BlogPostPlugin",
                     "CategoryPlugin",
+                    "CKEditorPlugin",
                     "CoursePlugin",
                     "LinkPlugin",
                     "OrganizationPlugin",
@@ -455,21 +457,9 @@ class Base(DRFMixin, RichieCoursesConfigurationMixin, Configuration):
             "name": _("Format"),
             "plugins": ["CKEditorPlugin"],
         },
-        "courses/cms/course_detail.html course_prerequisites": {
-            "name": _("Prerequisites"),
-            "plugins": ["CKEditorPlugin"],
-        },
-        "courses/cms/course_detail.html course_prerequisites": {
-            "name": _("Prerequisites"),
-            "plugins": ["PlainTextPlugin"],
-        },
         "courses/cms/course_detail.html course_team": {
             "name": _("Team"),
             "plugins": ["PersonPlugin"],
-        },
-        "courses/cms/course_detail.html course_plan": {
-            "name": _("Plan"),
-            "plugins": ["CKEditorPlugin"],
         },
         "courses/cms/course_detail.html course_information": {
             "name": _("Complementary information"),

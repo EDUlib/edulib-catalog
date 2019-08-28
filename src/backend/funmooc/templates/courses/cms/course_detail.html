@@ -79,23 +79,6 @@
       </div>
       {% endif %}
 
-      {% with main_organization=course.get_main_organization %}
-        {% if main_organization %}
-          {% if current_page.publisher_is_draft %}
-              {% if main_organization.check_publication is True %}
-                  {% include "courses/cms/fragment_organization_main_logo.html" with organization=main_organization.public_extension %}
-              {% else %}
-                  {% include "courses/cms/fragment_organization_main_logo.html" with organization=main_organization %}
-              {% endif %}
-          {# If the current page is the published version, show only the organizations that are published #}
-          {% elif main_organization.check_publication is True %}
-              {% include "courses/cms/fragment_organization_main_logo.html" with organization=main_organization.public_extension %}
-          {% endif %}
-        {% else %}
-          {% include "courses/cms/fragment_organization_main_logo.html" with organization=None %}
-        {% endif %}
-      {% endwith %}
-
       {% if course.duration or course.effort or current_page.publisher_is_draft %}
       <div class="course-detail__aside__synopsis">
         <dl>
@@ -158,10 +141,6 @@
         {% empty %}
           <div class="course-detail__aside__run__empty">{% trans "No associated course runs" %}</div>
         {% endfor %}
-      </div>
-
-      <div class="course-detail__aside__social-networks">
-        {% include "social-networks/course-badges.html" with page_title=request.current_page.get_title page_url=request.current_page.get_absolute_url %}
       </div>
     </div>
 
