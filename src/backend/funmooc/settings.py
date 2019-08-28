@@ -459,6 +459,10 @@ class Base(DRFMixin, RichieCoursesConfigurationMixin, Configuration):
             "name": _("Prerequisites"),
             "plugins": ["CKEditorPlugin"],
         },
+        "courses/cms/course_detail.html course_prerequisites": {
+            "name": _("Prerequisites"),
+            "plugins": ["PlainTextPlugin"],
+        },
         "courses/cms/course_detail.html course_team": {
             "name": _("Team"),
             "plugins": ["PersonPlugin"],
