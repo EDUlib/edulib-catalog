@@ -95,6 +95,14 @@ msgstr "L'enregistrement de {:d} choix nécessite l'enregistrement d'un CharFiel
 msgid "Switch to %(lang.name_translated)s"
 msgstr "Basculer vers %(lang.name_translated)s"
 
+#: apps/core/templates/richie/base.html:35
+msgid "Sign up"
+msgstr "Inscription"
+
+#: apps/core/templates/richie/base.html:38
+msgid "Login"
+msgstr "Connexion"
+
 #: apps/core/templates/richie/base.html:60
 msgid "All Rights Reserved."
 msgstr "Tous droits réservés."
