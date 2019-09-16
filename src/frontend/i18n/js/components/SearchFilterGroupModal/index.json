@@ -1,0 +1,27 @@
+[
+  {
+    "id": "components.SearchFilterGroupModal.closeModal",
+    "description": "Text for the button to close the search filters modal",
+    "defaultMessage": "Close"
+  },
+  {
+    "id": "components.SearchFilterGroupModal.error",
+    "description": "Error message when the search for more filter value fails in the search filters modal.",
+    "defaultMessage": "There was an error while searching for {filterName}."
+  },
+  {
+    "id": "components.SearchFilterGroupModal.modalTitle",
+    "description": "Title for the modal to add more filter values in the search filters modal.",
+    "defaultMessage": "Add filters for {filterName}"
+  },
+  {
+    "id": "components.SearchFilterGroupModal.moreOptionsButton",
+    "description": "Test for the button to see more filter values than the top N that appear by default.",
+    "defaultMessage": "More options"
+  },
+  {
+    "id": "components.SearchFilterGroupModal.queryTooShort",
+    "description": "Users need to enter at least 3 characters to search for more filter values; this message informs them when they start typing.",
+    "defaultMessage": "Type at least 3 characters to start searching."
+  }
+]

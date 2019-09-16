@@ -1,6 +1,6 @@
 import '../../testSetup';
 
-import { cleanup, fireEvent, render, wait } from '@testing-library/react';
+import { fireEvent, render, wait } from '@testing-library/react';
 import fetchMock from 'fetch-mock';
 import React from 'react';
 import { IntlProvider } from 'react-intl';
@@ -20,46 +20,46 @@ describe('components/SearchSuggestField', () => {
   // Make some filters we can reuse through our tests in <SearchSuggestField /> props
   const levels = {
     base_path: '00030002',
+    has_more_values: false,
     human_name: 'Levels',
     is_autocompletable: false,
+    is_searchable: false,
     name: 'levels',
     values: [],
   };
 
   const organizations = {
     base_path: '0002',
+    has_more_values: false,
     human_name: 'Organizations',
     is_autocompletable: true,
+    is_searchable: true,
     name: 'organizations',
     values: [],
   };
 
   const persons = {
     base_path: null,
+    has_more_values: false,
     human_name: 'Persons',
     is_autocompletable: true,
+    is_searchable: true,
     name: 'persons',
     values: [],
   };
 
   const subjects = {
     base_path: '00030001',
+    has_more_values: false,
     human_name: 'Subjects',
     is_autocompletable: true,
+    is_searchable: true,
     name: 'subjects',
     values: [],
   };
 
-  beforeEach(jest.resetAllMocks);
-
-  // Disable useless async act warnings
-  // TODO: remove this spy as soon as async act is available
-  beforeAll(() => {
-    jest.spyOn(console, 'error');
-  });
-
-  afterEach(cleanup);
   afterEach(fetchMock.restore);
+  beforeEach(jest.resetAllMocks);
 
   it('renders', () => {
     const { getByPlaceholderText } = render(
@@ -250,6 +250,8 @@ describe('components/SearchSuggestField', () => {
     expect(queryByText('Subjects')).toEqual(null);
 
     fireEvent.click(getByText('Organization #27'));
+    await wait();
+
     expect(dispatchCourseSearchParamsUpdate).toHaveBeenCalledWith({
       query: '',
       type: 'QUERY_UPDATE',
@@ -257,8 +259,10 @@ describe('components/SearchSuggestField', () => {
     expect(dispatchCourseSearchParamsUpdate).toHaveBeenCalledWith({
       filter: {
         base_path: '0002',
+        has_more_values: false,
         human_name: 'Organizations',
         is_autocompletable: true,
+        is_searchable: true,
         name: 'organizations',
         values: [],
       },
@@ -326,11 +330,15 @@ describe('components/SearchSuggestField', () => {
     expect(queryByText('Subjects')).toEqual(null);
 
     fireEvent.click(getByText('Doctor Doom'));
+    await wait();
+
     expect(dispatchCourseSearchParamsUpdate).toHaveBeenCalledWith({
       filter: {
         base_path: null,
+        has_more_values: false,
         human_name: 'Persons',
         is_autocompletable: true,
+        is_searchable: true,
         name: 'persons',
         values: [],
       },

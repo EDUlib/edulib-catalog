@@ -1,6 +1,6 @@
 import '../../testSetup';
 
-import { cleanup, fireEvent, render } from '@testing-library/react';
+import { fireEvent, render } from '@testing-library/react';
 import React from 'react';
 import { IntlProvider } from 'react-intl';
 
@@ -8,8 +8,6 @@ import { CourseSearchParamsContext } from '../../data/useCourseSearchParams/useC
 import { SearchFilterValueLeaf } from './SearchFilterValueLeaf';
 
 describe('components/SearchFilterValueLeaf', () => {
-  afterEach(cleanup);
-
   it('renders the name of the filter value', () => {
     const { getByLabelText } = render(
       <IntlProvider locale="en">
@@ -19,8 +17,10 @@ describe('components/SearchFilterValueLeaf', () => {
           <SearchFilterValueLeaf
             filter={{
               base_path: null,
+              has_more_values: false,
               human_name: 'Filter name',
               is_autocompletable: true,
+              is_searchable: true,
               name: 'filter_name',
               values: [],
             }}
@@ -53,8 +53,10 @@ describe('components/SearchFilterValueLeaf', () => {
           <SearchFilterValueLeaf
             filter={{
               base_path: null,
+              has_more_values: false,
               human_name: 'Filter name',
               is_autocompletable: true,
+              is_searchable: true,
               name: 'filter_name',
               values: [],
             }}
@@ -85,8 +87,10 @@ describe('components/SearchFilterValueLeaf', () => {
           <SearchFilterValueLeaf
             filter={{
               base_path: null,
+              has_more_values: false,
               human_name: 'Filter name',
               is_autocompletable: true,
+              is_searchable: true,
               name: 'filter_name',
               values: [],
             }}
@@ -124,8 +128,10 @@ describe('components/SearchFilterValueLeaf', () => {
           <SearchFilterValueLeaf
             filter={{
               base_path: null,
+              has_more_values: false,
               human_name: 'Filter name',
               is_autocompletable: true,
+              is_searchable: true,
               name: 'filter_name',
               values: [],
             }}
@@ -145,8 +151,10 @@ describe('components/SearchFilterValueLeaf', () => {
     expect(dispatchCourseSearchParamsUpdate).toHaveBeenCalledWith({
       filter: {
         base_path: null,
+        has_more_values: false,
         human_name: 'Filter name',
         is_autocompletable: true,
+        is_searchable: true,
         name: 'filter_name',
         values: [],
       },
@@ -168,8 +176,10 @@ describe('components/SearchFilterValueLeaf', () => {
           <SearchFilterValueLeaf
             filter={{
               base_path: null,
+              has_more_values: false,
               human_name: 'Filter name',
               is_autocompletable: true,
+              is_searchable: true,
               name: 'filter_name',
               values: [],
             }}
@@ -189,8 +199,10 @@ describe('components/SearchFilterValueLeaf', () => {
     expect(dispatchCourseSearchParamsUpdate).toHaveBeenCalledWith({
       filter: {
         base_path: null,
+        has_more_values: false,
         human_name: 'Filter name',
         is_autocompletable: true,
+        is_searchable: true,
         name: 'filter_name',
         values: [],
       },

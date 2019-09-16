@@ -1,7 +1,0 @@
-[
-  {
-    "id": "components.CloseIcon.closeLabel",
-    "description": "Accessibility label for the \"x\" disable icon on an active filer",
-    "defaultMessage": "Close"
-  }
-]

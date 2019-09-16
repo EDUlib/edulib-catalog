@@ -5,9 +5,9 @@
  * one in our library and actually do render it in the appropriate element.
  */
 
-import * as React from 'react';
-import * as ReactDOM from 'react-dom';
-import { addLocaleData, IntlProvider } from 'react-intl';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { IntlProvider } from 'react-intl';
 
 // Import submodules so we don't get the whole of lodash in the bundle
 import get from 'lodash-es/get';
@@ -16,6 +16,7 @@ import startCase from 'lodash-es/startCase';
 
 // Import the top-level components that can be directly called from the CMS
 import { Search } from './components/Search/Search';
+import { handle } from './utils/errors/handle';
 // List them in an interface for type-safety when we call them. This will let us use the props for
 // any top-level component in a way TypeScript understand and accepts
 interface ComponentLibrary {
@@ -47,21 +48,30 @@ document.addEventListener('DOMContentLoaded', event => {
         .join('');
       // Sanity check: only attempt to access and render components for which we do have a valid name
       if (isComponentName(componentName)) {
+        // Determine a lang (localeCode) based on the `data-locale` attribute
         const locale = element.getAttribute('data-locale') || 'en';
         let localeCode = locale;
         if (localeCode.match(/^.*_.*$/)) {
           localeCode = locale.split('_')[0];
         }
 
+        // Only load Intl polyfills & pre-built locale data for browsers that need it
         try {
-          const localeData = await import(
-            `react-intl/locale-data/${localeCode}`
-          );
-          // async import returns an object of getters containing the value we want. We have to fetch them
-          // by calling Object.values
-          addLocaleData(Object.values(localeData));
-        } catch (e) {}
+          if (!Intl.PluralRules) {
+            await import('intl-pluralrules');
+          }
+          if (!Intl.RelativeTimeFormat) {
+            await import('@formatjs/intl-relativetimeformat');
+            // Get `react-intl`/`formatjs` lang specific parameters and data
+            await import(
+              `@formatjs/intl-relativetimeformat/dist/locale-data/${localeCode}`
+            );
+          }
+        } catch (e) {
+          handle(e);
+        }
 
+        // Load our own strings for the given lang
         let translatedMessages = null;
         try {
           translatedMessages = await import(`./translations/${locale}.json`);
@@ -69,10 +79,17 @@ document.addEventListener('DOMContentLoaded', event => {
 
         // Do get the component dynamically. We know this WILL produce a valid component thanks to the type guard
         const Component = componentLibrary[componentName];
+
+        // Get the incoming props to pass our component from the `data-props` attribute
+        const dataProps = element.getAttribute('data-props');
+        const props = dataProps
+          ? (JSON.parse(dataProps) as Parameters<typeof Component>[0])
+          : {};
+
         // Render the component inside an `IntlProvider` to be able to access translated strings
         ReactDOM.render(
           <IntlProvider locale={localeCode} messages={translatedMessages}>
-            <Component />
+            <Component {...props} />
           </IntlProvider>,
           element,
         );

@@ -2,11 +2,11 @@
   {
     "id": "components.SearchFilterValueParent.ariaHideChildren",
     "description": "Accessibility message for the button to hide children of the current filter",
-    "defaultMessage": "Hide child filters"
+    "defaultMessage": "Hide additional filters for {filterValueName}"
   },
   {
     "id": "components.SearchFilterValueParent.ariaShowChildren",
     "description": "Accessibility message for the button to show children of the current filter",
-    "defaultMessage": "Show child filters"
+    "defaultMessage": "Show more filters for {filterValueName}"
   }
 ]

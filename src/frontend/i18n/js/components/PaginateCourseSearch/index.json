@@ -1,0 +1,37 @@
+[
+  {
+    "id": "components.PaginateCourseSearch.currentlyReadingLastPageN",
+    "description": "Accessibility helper in pagination, shown next to the current page number when it is the last page.",
+    "defaultMessage": "Currently reading last page {page}"
+  },
+  {
+    "id": "components.PaginateCourseSearch.currentlyReadingPageN",
+    "description": "Accessibility helper in pagination, shown next to the current page number when it is not the last page.",
+    "defaultMessage": "Currently reading page {page}"
+  },
+  {
+    "id": "components.PaginateCourseSearch.lastPageN",
+    "description": "Accessibility helper for pagination, added on the last page link.",
+    "defaultMessage": "Last page {page}"
+  },
+  {
+    "id": "components.PaginateCourseSearch.nextPageN",
+    "description": "Accessibility helper for pagination, added on the next page link.",
+    "defaultMessage": "Next page {page}"
+  },
+  {
+    "id": "components.PaginateCourseSearch.pageN",
+    "description": "Accessibility helper for pagination, added on all page links for screen readers,\n      only shown next to \"page 1\" visually.",
+    "defaultMessage": "Page {page}"
+  },
+  {
+    "id": "components.PaginateCourseSearch.pagination",
+    "description": "Label for the pagination navigation in course search results.",
+    "defaultMessage": "Pagination"
+  },
+  {
+    "id": "components.PaginateCourseSearch.previousPageN",
+    "description": "Accessibility helper for pagination, added on the previous page link.",
+    "defaultMessage": "Previous page {page}"
+  }
+]

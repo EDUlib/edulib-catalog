@@ -1,6 +1,6 @@
 import '../../testSetup';
 
-import { cleanup, fireEvent, render } from '@testing-library/react';
+import { fireEvent, render } from '@testing-library/react';
 import React from 'react';
 import { IntlProvider } from 'react-intl';
 
@@ -14,8 +14,6 @@ jest.mock('../SearchFilterGroup/SearchFilterGroup', () => ({
 }));
 
 describe('components/SearchFiltersPane', () => {
-  afterEach(cleanup);
-
   it('renders all our search filter groups', () => {
     const { getByText } = render(
       <IntlProvider locale="en">
@@ -26,15 +24,19 @@ describe('components/SearchFiltersPane', () => {
             filters={{
               categories: {
                 base_path: '0001',
+                has_more_values: false,
                 human_name: 'Categories',
                 is_autocompletable: true,
+                is_searchable: true,
                 name: 'categories',
                 values: [],
               },
               organizations: {
                 base_path: '0002',
+                has_more_values: false,
                 human_name: 'Organizations',
                 is_autocompletable: true,
+                is_searchable: true,
                 name: 'organizations',
                 values: [],
               },
@@ -48,7 +50,7 @@ describe('components/SearchFiltersPane', () => {
     getByText('Filter courses');
     getByText('Received filter title: Categories');
     getByText('Received filter title: Organizations');
-    expect(getByText('Clear 0 active filters').parentElement).toHaveClass(
+    expect(getByText('Clear 0 active filters')).toHaveClass(
       'search-filters-pane__clear--hidden',
     );
   });
@@ -85,15 +87,19 @@ describe('components/SearchFiltersPane', () => {
             filters={{
               categories: {
                 base_path: '0001',
+                has_more_values: false,
                 human_name: 'Categories',
                 is_autocompletable: true,
+                is_searchable: true,
                 name: 'categories',
                 values: [],
               },
               organizations: {
                 base_path: '0002',
+                has_more_values: false,
                 human_name: 'Organizations',
                 is_autocompletable: true,
+                is_searchable: true,
                 name: 'organizations',
                 values: [],
               },

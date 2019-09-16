@@ -1,14 +1,12 @@
 import '../../testSetup';
 
-import { cleanup, render } from '@testing-library/react';
+import { render } from '@testing-library/react';
 import React from 'react';
 import { IntlProvider } from 'react-intl';
 
 import { CourseGlimpse } from './CourseGlimpse';
 
 describe('components/CourseGlimpse', () => {
-  afterEach(cleanup);
-
   const course = {
     absolute_url: 'https://example/com/courses/42/',
     categories: ['24', '42'],
@@ -17,6 +15,7 @@ describe('components/CourseGlimpse', () => {
       src: '/thumbs/small.png',
       srcset: 'some srcset',
     },
+    icon: null,
     id: '742',
     organization_highlighted: 'Some Organization',
     organizations: ['36', '63'],
