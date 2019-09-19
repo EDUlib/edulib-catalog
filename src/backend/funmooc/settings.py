@@ -11,6 +11,8 @@ import sentry_sdk
 from configurations import Configuration, values
 from sentry_sdk.integrations.django import DjangoIntegration
 
+from richie.apps.courses.settings.mixins import RichieCoursesConfigurationMixin
+
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 DATA_DIR = os.path.join("/", "data")
 
@@ -51,7 +53,7 @@ class DRFMixin:
     }
 
 
-class Base(DRFMixin, Configuration):
+class Base(DRFMixin, RichieCoursesConfigurationMixin, Configuration):
     """
     This is the base configuration every configuration (aka environnement) should inherit from. It
     is recommended to configure third-party applications by creating a configuration mixins in
@@ -293,33 +295,7 @@ class Base(DRFMixin, Configuration):
     GOOGLE_SHEET_CREDENTIALS = values.Value(None)
     GIMPORTER_BASE_URL = values.Value("https://www.fun-mooc.fr")
     
-    # Easy Thumbnails
-    THUMBNAIL_PROCESSORS = (
-        "easy_thumbnails.processors.colorspace",
-        "easy_thumbnails.processors.autocrop",
-        "filer.thumbnail_processors.scale_and_crop_with_subject_location",
-        "easy_thumbnails.processors.filters",
-        "easy_thumbnails.processors.background",
-    )
-
-    # Django CMS
-    CMS_TEMPLATES = (
-        ("courses/cms/course_detail.html", _("Course page")),
-        ("courses/cms/course_run_detail.html", _("Course run page")),
-        ("courses/cms/organization_list.html", _("Organization list")),
-        ("courses/cms/organization_detail.html", _("Organization page")),
-        ("courses/cms/category_list.html", _("Category list")),
-        ("courses/cms/category_detail.html", _("Category page")),
-        ("courses/cms/blogpost_list.html", _("Blog post list")),
-        ("courses/cms/blogpost_detail.html", _("Blog post page")),
-        ("courses/cms/person_detail.html", _("Person page")),
-        ("courses/cms/person_list.html", _("Person list")),
-        ("search/search.html", _("Search")),
-        ("richie/child_pages_list.html", _("List of child pages")),
-        ("richie/homepage.html", _("Homepage")),
-        ("richie/single_column.html", _("Single column")),
-    )
-
+    # Placeholders limits and restrictions
     CMS_PLACEHOLDER_CONF = {
         # Homepage
         "richie/homepage.html maincontent": {
@@ -384,11 +360,11 @@ class Base(DRFMixin, Configuration):
         },
         "courses/cms/course_detail.html course_format": {
             "name": _("Format"),
-            "plugins": ["PlainTextPlugin"],
+            "plugins": ["CKEditorPlugin"],
         },
         "courses/cms/course_detail.html course_prerequisites": {
             "name": _("Prerequisites"),
-            "plugins": ["PlainTextPlugin"],
+            "plugins": ["CKEditorPlugin"],
         },
         "courses/cms/course_detail.html course_team": {
             "name": _("Team"),
@@ -421,13 +397,18 @@ class Base(DRFMixin, Configuration):
             "name": _("Categories"),
             "plugins": ["CategoryPlugin"],
         },
+        "courses/cms/course_detail.html course_icons": {
+            "name": _("Icon"),
+            "plugins": ["CategoryPlugin"],
+            "limits": {"CategoryPlugin": 1},
+        },
         "courses/cms/course_detail.html course_organizations": {
             "name": _("Organizations"),
             "plugins": ["OrganizationPlugin"],
         },
         "courses/cms/course_detail.html course_assessment": {
             "name": _("Assessment and Certification"),
-            "plugins": ["PlainTextPlugin"],
+            "plugins": ["CKEditorPlugin"],
         },
         # Organization detail
         "courses/cms/organization_detail.html banner": {
@@ -453,6 +434,11 @@ class Base(DRFMixin, Configuration):
         },
         "courses/cms/category_detail.html logo": {
             "name": _("Logo"),
+            "plugins": ["SimplePicturePlugin"],
+            "limits": {"SimplePicturePlugin": 1},
+        },
+        "courses/cms/category_detail.html icon": {
+            "name": _("Icon"),
             "plugins": ["SimplePicturePlugin"],
             "limits": {"SimplePicturePlugin": 1},
         },
@@ -504,125 +490,6 @@ class Base(DRFMixin, Configuration):
             "name": _("Body"),
             "excluded_plugins": ["CKEditorPlugin", "GoogleMapPlugin"],
         },
-    }
-
-    # Main CKEditor configuration
-    CKEDITOR_SETTINGS = {
-        "language": "{{ language }}",
-        "skin": "moono-lisa",
-        "toolbarCanCollapse": False,
-        "contentsCss": "/static/richie/css/ckeditor.css",
-        # Enabled showblocks as default behavior
-        "startupOutlineBlocks": True,
-        # Enable some plugins
-        # 'extraPlugins': 'codemirror',
-        # Disable element filter to enable full HTML5, also this will let
-        # append any code, even bad syntax and malicious code, so be careful
-        "removePlugins": "stylesheetparser",
-        "allowedContent": True,
-        # Image plugin options
-        "image_prefillDimensions": False,
-        # Justify text using shortand class names
-        "justifyClasses": ["text-left", "text-center", "text-right"],
-        # Default toolbar configurations for djangocms_text_ckeditor
-        "toolbar": "CMS",
-        "toolbar_CMS": [
-            ["Undo", "Redo"],
-            ["cmsplugins", "-", "ShowBlocks"],
-            ["Format", "Styles"],
-            ["RemoveFormat"],
-            ["Maximize"],
-            "/",
-            ["Bold", "Italic", "Underline", "-", "Subscript", "Superscript"],
-            ["JustifyLeft", "JustifyCenter", "JustifyRight"],
-            ["Link", "Unlink"],
-            ["NumberedList", "BulletedList", "-", "HorizontalRule"],
-            ["Source"],
-        ],
-    }
-    # Share the same configuration for djangocms_text_ckeditor field and derived
-    # CKEditor widgets/fields
-    CKEDITOR_SETTINGS["toolbar_HTMLField"] = CKEDITOR_SETTINGS["toolbar_CMS"]
-
-    # CKEditor configuration for basic formatting
-    CKEDITOR_BASIC_CONFIGURATION = {
-        "language": "{{ language }}",
-        "skin": "moono-lisa",
-        "toolbarCanCollapse": False,
-        "contentsCss": "/static/css/ckeditor.css",
-        # Only enable following tag definitions
-        "allowedContent": ["p", "b", "i", "a[href]"],
-        # Enabled showblocks as default behavior
-        "startupOutlineBlocks": True,
-        # Default toolbar configurations for djangocms_text_ckeditor
-        "toolbar": "HTMLField",
-        "toolbar_HTMLField": [["Undo", "Redo"], ["Bold", "Italic"], ["Link", "Unlink"]],
-    }
-
-    # CKEditor configuration for formatting limited to:
-    # paragraph, bold, italic and numbered or bulleted lists.
-    CKEDITOR_LIMITED_CONFIGURATION = {
-        "language": "{{ language }}",
-        "skin": "moono-lisa",
-        "toolbarCanCollapse": False,
-        "contentsCss": "/static/css/ckeditor.css",
-        # Only enable following tag definitions
-        "allowedContent": ["p", "b", "i", "ol", "ul", "li"],
-        # Enabled showblocks as default behavior
-        "startupOutlineBlocks": True,
-        # Default toolbar configurations for djangocms_text_ckeditor
-        "toolbar": "HTMLField",
-        "toolbar_HTMLField": [
-            ["Undo", "Redo"],
-            ["Bold", "Italic"],
-            ["Link", "Unlink"],
-            ["NumberedList", "BulletedList", "-"],
-        ],
-    }
-
-    # Additional LinkPlugin templates. Note how choice value is just a keyword
-    # instead of full template path. Value is used inside a path formatting
-    # such as "templates/djangocms_link/VALUE/link.html"
-    DJANGOCMS_LINK_TEMPLATES = [("button-caesura", _("Button caesura"))]
-
-    DJANGOCMS_VIDEO_TEMPLATES = [("full-width", _("Full width"))]
-
-    # Richie plugins
-
-    RICHIE_PLAINTEXT_MAXLENGTH = {"course_introduction": 200, "bio": 150, "excerpt": 200}
-
-    RICHIE_SIMPLETEXT_CONFIGURATION = [
-        {
-            "placeholders": ["course_skills", "course_plan"],
-            "ckeditor": "CKEDITOR_LIMITED_CONFIGURATION",
-        },
-        {
-            "placeholders": ["course_description"],
-            "ckeditor": "CKEDITOR_LIMITED_CONFIGURATION",
-            "max_length": 1200,
-        },
-    ]
-
-    RICHIE_SIMPLEPICTURE_PRESETS = {
-        # Formatting images for the courses search index
-        "glimpse": {
-            "src": {"size": (300, 170), "crop": "smart"},
-            "srcset": [
-                {
-                    "options": {"size": (300, 170), "crop": "smart", "upscale": True},
-                    "descriptor": "300w",
-                },
-                {
-                    "options": {"size": (600, 340), "crop": "smart", "upscale": True},
-                    "descriptor": "600w",
-                },
-                {
-                    "options": {"size": (900, 560), "crop": "smart", "upscale": True},
-                    "descriptor": "900w",
-                },
-            ],
-            "sizes": "300px",
-        }
     }
 
     @classmethod
