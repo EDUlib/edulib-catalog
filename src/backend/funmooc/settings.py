@@ -317,31 +317,44 @@ class Base(DRFMixin, RichieCoursesConfigurationMixin, Configuration):
                             "position": 1,
                         },
                     ),
-                    (
-                        "richie.apps.search.filter_definitions.LanguagesFilterDefinition",
-                        {
-                            "human_name": _("Languages"),
-                            # There are too many available languages to show them all, all the time.
-                            # Eg. 200 languages, 190+ of which will have 0 matching courses.
-                            "min_doc_count": 1,
-                            "name": "languages",
-                            "position": 5,
-                            "sorting": "count",
-                        },
-                    ),
+                    #(
+                            #"richie.apps.search.filter_definitions.LanguagesFilterDefinition",
+                            #{
+                                #"human_name": _("Languages"),
+                                # There are too many available languages to show them all, all the time.
+                                # Eg. 200 languages, 190+ of which will have 0 matching courses.
+                                #"min_doc_count": 1,
+                                #"name": "languages",
+                                #"position": 5,
+                                #"sorting": "count",
+                            #},
+                    #),
                 ],
             },
         ),
         (
             "richie.apps.search.filter_definitions.IndexableMPTTFilterDefinition",
             {
-                "human_name": _("Subjects"),
+                "human_name": _("Leadership Dimensions"),
                 "is_autocompletable": True,
                 "is_searchable": True,
                 "min_doc_count": 0,
-                "name": "subjects",
+                "name": "dimensions",
                 "position": 2,
-                "reverse_id": "subjects",
+                "reverse_id": "dimensions",
+                "term": "categories",
+            },
+        ),
+        (
+            "richie.apps.search.filter_definitions.IndexableMPTTFilterDefinition",
+            {
+                "human_name": _("Competencies"),
+                "is_autocompletable": True,
+                "is_searchable": True,
+                "min_doc_count": 0,
+                "name": "competencies",
+                "position": 3,
+                "reverse_id": "competencies",
                 "term": "categories",
             },
         ),
@@ -358,18 +371,18 @@ class Base(DRFMixin, RichieCoursesConfigurationMixin, Configuration):
                 #"term": "categories",
             #},
         #),
-        (
-            "richie.apps.search.filter_definitions.IndexableMPTTFilterDefinition",
-            {
-                "human_name": _("Organizations"),
-                "is_autocompletable": True,
-                "is_searchable": True,
-                "min_doc_count": 0,
-                "name": "organizations",
-                "position": 4,
-                "reverse_id": "organizations",
-            },
-        ),
+        #(
+            #"richie.apps.search.filter_definitions.IndexableMPTTFilterDefinition",
+            #{
+                #"human_name": _("Organizations"),
+                #"is_autocompletable": True,
+                #"is_searchable": True,
+                #"min_doc_count": 0,
+                #"name": "organizations",
+                #"position": 4,
+                #"reverse_id": "organizations",
+            #},
+        #),
         (
             "richie.apps.search.filter_definitions.IndexableFilterDefinition",
             {
