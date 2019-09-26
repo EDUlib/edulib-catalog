@@ -592,6 +592,13 @@ class Base(DRFMixin, RichieCoursesConfigurationMixin, Configuration):
         },
     }
 
+    RICHIE_SIMPLETEXT_CONFIGURATION = [
+        {
+            "placeholders": ["course_skills", "course_plan"],
+            "ckeditor": "CKEDITOR_LIMITED_CONFIGURATION",
+        },
+    ]
+
     @classmethod
     def post_setup(cls):
         """Post setup configuration.
