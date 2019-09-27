@@ -53,7 +53,7 @@ $richie-course-glimpse-foot-date-fontcolor: $gray40 !default;
 $richie-course-glimpse-foot-date-textalign: center !default;
 $richie-course-glimpse-foot-date-background: null !default;
 
-$richie-course-glimpse-foot-cta-width: 100% !default;
+$richie-course-glimpse-foot-cta-width: 45% !default;
 $richie-course-glimpse-foot-cta-padding: 0.3rem 0.5rem !default;
 $richie-course-glimpse-foot-cta-fontsize: 0.9rem !default;
 $richie-course-glimpse-foot-cta-fontweight: bold !default;
@@ -222,6 +222,7 @@ $richie-course-glimpse-foot-cta-background-hover: $edulib5 !default;
       justify-content: center;
       text-align: $richie-course-glimpse-foot-date-textalign;
       background: $richie-course-glimpse-foot-date-background;
+      min-height: 3.25rem;
     }
 
     &__cta {
