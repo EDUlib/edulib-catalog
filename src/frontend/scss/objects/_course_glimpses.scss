@@ -212,7 +212,6 @@ $richie-course-glimpse-foot-cta-background-hover: $edulib5 !default;
   &__footer {
     display: flex;
     border-top: $richie-course-glimpse-foot-border;
-    min-height: 3.25rem;
 
     &__date {
       @include sv-flex-cell-width(auto);
@@ -223,6 +222,7 @@ $richie-course-glimpse-foot-cta-background-hover: $edulib5 !default;
       justify-content: center;
       text-align: $richie-course-glimpse-foot-date-textalign;
       background: $richie-course-glimpse-foot-date-background;
+      min-height: 3.25rem;
     }
 
     &__cta {
