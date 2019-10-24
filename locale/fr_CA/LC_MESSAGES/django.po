@@ -377,7 +377,7 @@ msgstr "archivé"
 
 #: apps/courses/models/course.py:57
 msgid "to be scheduled"
-msgstr "à planifier"
+msgstr "dates à venir"
 
 #: apps/courses/models/course.py:84
 msgid "forever open"
@@ -588,7 +588,7 @@ msgstr "Accroche"
 #: apps/courses/settings/__init__.py:103
 #: apps/courses/templates/courses/cms/fragment_course_content.html:11
 msgid "About the course"
-msgstr "À propos du cours"
+msgstr "À propos de ce cours"
 
 #: apps/courses/settings/__init__.py:107
 #: apps/courses/templates/courses/cms/fragment_course_content.html:22
@@ -873,11 +873,11 @@ msgstr "Quelles sont les institutions publiant ce cours?"
 
 #: apps/courses/templates/courses/cms/fragment_course_content.html:84
 msgid "Course team"
-msgstr "Équipe pédagogique"
+msgstr "Formateurs/Formatrices"
 
 #: apps/courses/templates/courses/cms/fragment_course_content.html:89
 msgid "Who are the teachers in the course team?"
-msgstr "Qui sont les enseignants de l’équipe pédagogique ?"
+msgstr "Qui sont les formateurs/formatrices ?"
 
 #: apps/courses/templates/courses/cms/fragment_course_content.html:104
 msgid "License"
