@@ -123,6 +123,7 @@ $richie-topbar-menu-item-divider-border-lg: 1px solid $white !default;
 
     &__logo {
       display: block;
+      height: $richie-topbar-brand-height;
     }
   }
 
