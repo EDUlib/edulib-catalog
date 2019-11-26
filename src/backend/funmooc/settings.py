@@ -219,7 +219,7 @@ class Base(DRFMixin, RichieCoursesConfigurationMixin, Configuration):
     # fallback/default languages throughout the app.
     # Use "en" as default as it is the language that is most likely to be spoken by any visitor
     # when their preferred language, whatever it is, is unavailable
-    LANGUAGES = (("en", _("English")), ("fr", _("French")))
+    LANGUAGES = (("fr", _("French")), ("en", _("English")))
 
     # - Django CMS
     CMS_LANGUAGES = {
@@ -227,7 +227,7 @@ class Base(DRFMixin, RichieCoursesConfigurationMixin, Configuration):
             "public": True,
             "hide_untranslated": False,
             "redirect_on_fallback": True,
-            "fallbacks": ["en", "fr"],
+            "fallbacks": ["fr", "en"],
         },
         1: [
             {
@@ -399,6 +399,7 @@ class Base(DRFMixin, RichieCoursesConfigurationMixin, Configuration):
                     "BlogPostPlugin",
                     "CoursePlugin",
                     "CategoryPlugin",
+                    "CKEditorPlugin",
                     "LinkPlugin",
                     "OrganizationPlugin",
                     "PersonPlugin",
@@ -447,18 +448,6 @@ class Base(DRFMixin, RichieCoursesConfigurationMixin, Configuration):
             "name": _("About the course"),
             "plugins": ["CKEditorPlugin"],
         },
-        "courses/cms/course_detail.html course_skills": {
-            "name": _("What you will learn"),
-            "plugins": ["CKEditorPlugin"],
-        },
-        "courses/cms/course_detail.html course_format": {
-            "name": _("Format"),
-            "plugins": ["CKEditorPlugin"],
-        },
-        "courses/cms/course_detail.html course_prerequisites": {
-            "name": _("Prerequisites"),
-            "plugins": ["CKEditorPlugin"],
-        },
         "courses/cms/course_detail.html course_team": {
             "name": _("Team"),
             "plugins": ["PersonPlugin"],
@@ -470,21 +459,10 @@ class Base(DRFMixin, RichieCoursesConfigurationMixin, Configuration):
         "courses/cms/course_detail.html course_information": {
             "name": _("Complementary information"),
             "plugins": ["SectionPlugin"],
-            "parent_classes": {
-                "CKEditorPlugin": ["SectionPlugin"],
-                "SimplePicturePlugin": ["SectionPlugin"],
-            },
-            "child_classes": {"SectionPlugin": ["CKEditorPlugin", "SimplePicturePlugin"]},
         },
-        "courses/cms/course_detail.html course_license_content": {
-            "name": _("License for the course content"),
-            "plugins": ["LicencePlugin"],
-            "limits": {"LicencePlugin": 1},
-        },
-        "courses/cms/course_detail.html course_license_participation": {
-            "name": _("License for the content created by course participants"),
-            "plugins": ["LicencePlugin"],
-            "limits": {"LicencePlugin": 1},
+        "courses/cms/course_detail.html course_information": {
+            "name": _("Complementary information"),
+            "plugins": ["SectionPlugin"],
         },
         "courses/cms/course_detail.html course_categories": {
             "name": _("Categories"),
@@ -498,10 +476,6 @@ class Base(DRFMixin, RichieCoursesConfigurationMixin, Configuration):
         "courses/cms/course_detail.html course_organizations": {
             "name": _("Organizations"),
             "plugins": ["OrganizationPlugin"],
-        },
-        "courses/cms/course_detail.html course_assessment": {
-            "name": _("Assessment and Certification"),
-            "plugins": ["CKEditorPlugin"],
         },
         # Organization detail
         "courses/cms/organization_detail.html banner": {
