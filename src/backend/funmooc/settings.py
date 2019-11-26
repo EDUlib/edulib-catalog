@@ -460,7 +460,7 @@ class Base(DRFMixin, RichieCoursesConfigurationMixin, Configuration):
             "name": _("Complementary information"),
             "plugins": ["SectionPlugin"],
         },
-        "courses/cms/course_detail.html course_information": {
+        "courses/cms/course_detail.html course_more_information": {
             "name": _("Complementary information"),
             "plugins": ["SectionPlugin"],
         },
