@@ -873,11 +873,11 @@ msgstr "Quelles sont les institutions publiant ce cours?"
 
 #: apps/courses/templates/courses/cms/fragment_course_content.html:84
 msgid "Course team"
-msgstr "Formateurs/Formatrices"
+msgstr "Formateurs"
 
 #: apps/courses/templates/courses/cms/fragment_course_content.html:89
 msgid "Who are the teachers in the course team?"
-msgstr "Qui sont les formateurs/formatrices ?"
+msgstr "Qui sont les formateurs ?"
 
 #: apps/courses/templates/courses/cms/fragment_course_content.html:104
 msgid "License"
