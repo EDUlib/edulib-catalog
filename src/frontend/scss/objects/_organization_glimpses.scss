@@ -54,6 +54,7 @@ $richie-org-glimpse-item-empty-textalign: left !default;
   flex-grow: 0;
   flex-shrink: 0;
   flex-basis: calc(33% - #{$richie-org-glimpse-item-gutter * 2});
+  min-width: 150px;
   margin: $richie-org-glimpse-item-gutter;
   padding: $richie-org-glimpse-item-padding;
   flex-direction: column;
