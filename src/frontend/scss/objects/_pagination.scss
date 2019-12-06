@@ -1,0 +1,43 @@
+// Pagination object
+//
+.pagination {
+  @include make-container-max-widths();
+  @include sv-flex(1, 0, 100%);
+  margin: 0 auto;
+
+  &__list {
+    display: flex;
+    margin: 1rem 0;
+    padding: 0;
+    justify-content: center;
+
+    &__item {
+      list-style-type: none;
+      display: flex;
+      background: white;
+      border: 1px solid $dodgerblue1;
+      color: $dodgerblue1;
+      cursor: pointer;
+
+      & + & {
+        border-left: 0;
+      }
+
+      &--current {
+        background: $dodgerblue1;
+        color: white;
+        cursor: default;
+      }
+
+      &--placeholder {
+        padding: 0.5rem 1rem;
+        cursor: default;
+      }
+
+      &__page-number {
+        padding: 0.5rem 1rem;
+        color: inherit;
+      }
+    }
+  }
+}
