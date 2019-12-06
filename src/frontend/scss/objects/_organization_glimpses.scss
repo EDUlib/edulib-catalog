@@ -8,8 +8,8 @@ $richie-org-glimpse-list-title-padding: 0.5rem !default;
 $richie-org-glimpse-content-margin: 0 auto !default;
 $richie-org-glimpse-content-padding: 1rem 0 !default;
 
-$richie-org-glimpse-item-gutter: 0.5rem !default;
-$richie-org-glimpse-item-padding: 0.5rem !default;
+$richie-org-glimpse-item-gutter: 0.625rem !default;
+$richie-org-glimpse-item-padding: 1.25rem !default;
 $richie-org-glimpse-item-background: $white !default;
 $richie-org-glimpse-item-border: 1px solid $gray80 !default;
 $richie-org-glimpse-item-border-hover: 1px solid $edulib5 !default;
@@ -70,18 +70,6 @@ $richie-org-glimpse-item-empty-textalign: left !default;
 
   @include media-breakpoint-up(xl) {
     flex-basis: calc(15% - #{$richie-org-glimpse-item-gutter * 2});
-  }
-
-  &__small {
-    flex-basis: calc(25% - #{$richie-org-glimpse-item-gutter * 2});
-
-    @include media-breakpoint-up(sm) {
-      flex-basis: calc(15% - #{$richie-org-glimpse-item-gutter * 2});
-    }
-
-    @include media-breakpoint-up(xl) {
-      flex-basis: calc(10% - #{$richie-org-glimpse-item-gutter * 2});
-    }
   }
 
   &__logo {
