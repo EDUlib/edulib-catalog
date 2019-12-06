@@ -48,12 +48,15 @@
 // Shared object styles
 @import './templates/menu/_menu';
 @import './templates/richie/single-column';
+@import './objects/breadcrumbs';
 @import './objects/course_glimpses';
 @import './objects/blogpost_glimpses';
 @import './objects/organization_glimpses';
 @import './objects/person_glimpses';
 @import './objects/category_glimpses';
+@import './objects/program_glimpses';
 @import './objects/search-filter-value';
+@import './objects/pagination';
 @import './templates/core/social-networks/social-networks';
 @import './templates/courses/plugins/category_plugin';
 @import './templates/courses/plugins/licence_plugin';
@@ -63,13 +66,13 @@
 @import './templates/courses/cms/course_detail';
 @import './templates/courses/cms/person_detail';
 @import './templates/courses/cms/blogpost_detail';
+@import './templates/courses/cms/program_detail';
 @import './templates/search/search';
 @import './templates/richie/large_banner/large_banner';
 @import './templates/richie/large_banner/hero-intro';
 @import './templates/richie/section/section';
 
 // Frontend components objects styles
-@import '../js/components/PaginateCourseSearch/_PaginateCourseSearch';
 @import '../js/components/Search/_Search';
 @import '../js/components/SearchFilterGroup/_SearchFilterGroup';
 @import '../js/components/SearchFilterGroupModal/SearchFilterGroupModal';
