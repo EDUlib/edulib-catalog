@@ -70,6 +70,10 @@
           <a class="course-detail__content__run__block__cta" href="{{ course_run.resource_link }}">
             {{ course_run.state.call_to_action|capfirst }}
           </a>
+        {% elif run.state.call_to_action %}
+          <button class="course-detail__content__run__block__cta course-detail__content__run__block__cta--projected">
+            {{ course_run.state.text|capfirst }}
+          </button>
         {% else %}
           <button class="course-detail__content__run__block__cta course-detail__content__run__block__cta--projected">
             {{ course_run.state.text|capfirst }}
