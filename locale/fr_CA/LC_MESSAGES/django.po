@@ -4,7 +4,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-09-18 19:56+0000\n"
 "PO-Revision-Date: 2019-09-19 14:47\n"
-"Last-Translator: David Truong\n"
+"Last-Translator: Samuel Paccoud (sampaccoud)\n"
 "Language-Team: French, Canada\n"
 "Language: fr_CA\n"
 "MIME-Version: 1.0\n"
@@ -177,7 +177,7 @@ msgstr "Suivre un cours en ligne avec EDUlib"
 #: apps/core/templates/social-networks/course-badges.html:4
 #, python-format
 msgid "I just enrolled to the course \"%(title)s\" on EDUlib: %(url)s"
-msgstr "Je me suis juste inscrit au cours «%(title)s» sur EDUlib : %(url)s"
+msgstr "Je me suis inscrit(e) au cours «%(title)s» sur EDUlib : %(url)s"
 
 #: apps/core/templates/social-networks/course-badges.html:6
 #: apps/core/templates/social-networks/footer-badges.html:2
