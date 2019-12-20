@@ -18,9 +18,9 @@
         <img
           src="{% thumbnail instance.picture 200x200 crop upscale subject_location=instance.picture.subject_location %}"
           srcset="
-            {% thumbnail instance.picture 200x200 crop upscale subject_location=instance.picture.subject_location %} 200w
-            {% if instance.picture.width >= 400 %},{% thumbnail instance.picture 400x400 crop upscale subject_location=instance.picture.subject_location %} 400w{% endif %}
-            {% if instance.picture.width >= 600 %},{% thumbnail instance.picture 600x600 crop upscale subject_location=instance.picture.subject_location %} 600w{% endif %}
+            {% thumbnail instance.picture 200x200 crop upscale subject_location=instance.picture.subject_location %} 200w,
+            {% if instance.picture.width >= 400 %}{% thumbnail instance.picture 400x400 crop upscale subject_location=instance.picture.subject_location %} 400w,{% endif %}
+            {% if instance.picture.width >= 600 %}{% thumbnail instance.picture 600x600 crop upscale subject_location=instance.picture.subject_location %} 600w{% endif %}
           "
           sizes="200px"
           alt="{% if instance.picture.default_alt_text %}{{ instance.picture.default_alt_text }}{% else %}{% blocktrans with title=current_page.get_title %}{{ title }} avatar{% endblocktrans %}{% endif %}"
@@ -49,7 +49,11 @@
   {% if current_page.publisher_is_draft or not current_page|is_empty_placeholder:"organizations" %}
     <section class="organization-glimpse-list">
       <h2 class="organization-glimpse-list__title">{% trans "Organizations" %}</h2>
-      {% placeholder "organizations" %}
+      {% placeholder "organizations" or %}
+        <p class="organization-glimpse-list__empty">
+          {% trans "No associated organizations" %}
+        </p>
+      {% endplaceholder %}
     </section>
   {% endif %}
 
