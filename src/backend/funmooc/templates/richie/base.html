@@ -1,10 +1,42 @@
 {% load i18n cms_tags menu_tags static sekizai_tags %}
 <!doctype html>
-<html>
+<html lang="{{ LANGUAGE_CODE }}">
     <head>
+        {% spaceless %}
         <title>{% block title %}{{ SITE.name }}{% endblock title %}</title>
         <meta name="viewport" content="width=device-width,initial-scale=1">
-        {% block meta %}{% endblock meta %}
+        {% block meta %}
+            {% block meta_index_rules %}
+                <meta name="robots" content="index,follow,all">
+            {% endblock meta_index_rules %}
+
+            {% block meta_html %}
+                {% page_attribute "meta_description" as meta_description %}
+                {% if meta_description and meta_description != "None" %}<meta name="description" content="{% block meta-description %}{{ meta_description }}{% endblock %}">{% endif %}
+            {% endblock meta_html %}
+
+            {% block meta_opengraph %}
+                {% block meta_opengraph_locale %}
+                    <meta property="og:locale" content="{{ LANGUAGE_CODE }}">
+                {% endblock meta_opengraph_locale %}
+                {% block meta_opengraph_type %}
+                    <meta property="og:type" content="website">
+                {% endblock meta_opengraph_type %}
+                {% block meta_opengraph_sitename %}
+                    <meta property="og:site_name" content="{{ SITE.name }}">
+                {% endblock meta_opengraph_sitename %}
+                {% comment %}Since we are not able yet to get relevant image contextually for each content kind, we
+                keep the logo as the ressource image for all{% endcomment %}
+                {% block meta_opengraph_image %}
+                    <meta property="og:image" content="{{ SITE.web_url }}{% static "richie/images/edulib_bleu.png" %}">
+                {% endblock meta_opengraph_image %}
+                {% block meta_opengraph_contextuals %}
+                    <meta property="og:title" content="{{ SITE.name }}">
+                    <meta property="og:url" content="{{ SITE.web_url }}">
+                {% endblock meta_opengraph_contextuals %}
+            {% endblock meta_opengraph %}
+        {% endblock meta %}
+        {% endspaceless %}
 
         {% render_block "css" %}
 
@@ -22,7 +54,7 @@
                     <button class="topbar__hamburger"
                             data-target="main-menu" aria-label="menu" aria-expanded="false">&#8801;</button>
                     <a href="/" class="topbar__brand__link">
-                        <img src="{% static "images/edulib_bleu.png" %}" class="topbar__brand__logo" alt="{{ SITE.name }}">
+                        <img src="{% static "richie/images/edulib_bleu.png" %}" class="topbar__brand__logo" alt="{{ SITE.name }}">
                     </a>
                 </div>
                 <div class="topbar__menu">
@@ -43,6 +75,11 @@
             {% endblock body_header %}
 
             <div class="body-content {% block bodycontent_classes %}{% endblock bodycontent_classes %}">
+            {% block breadcrumbs %}
+            <ul class="breadcrumbs">
+                {% block breadcrumbs_content %}{% show_breadcrumb 0 "menu/breadcrumb_item.html" %}{% endblock breadcrumbs_content %}
+            </ul>
+            {% endblock breadcrumbs %}
             {% block content %}{% endblock content %}
             </div>
 
@@ -50,17 +87,17 @@
             <div class="body-footer">
                 <div class="body-footer__menu">
                     <ul class="body-footer__menu__list">
-                        {% show_menu_below_id "annex" 0 100 100 100 "menu/footer_menu.html" %}
+                        {% show_menu_below_id "annex" 0 2 100 100 "menu/footer_menu.html" %}
                     </ul>
                 </div>
                 <div class="body-footer__brand">
                     <a href="/" class="body-footer__brand__link">
-                        <img src="{% static "images/edulib_blanc.png" %}" class="body-footer__brand__logo" alt="">
+                        <img src="{% static "richie/images/edulib_blanc.png" %}" class="body-footer__brand__logo" alt="">
                     </a>
                     {% include "social-networks/footer-badges.html" %}
                 </div>
                 <div class="body-footer__mentions">
-                    <p>{% now "Y" %} &copy; EDUlib {% trans "All Rights Reserved." %}</p>
+                    <p>{% now "Y" %} &copy; EDUlib {% blocktrans %}All Rights Reserved.{% endblocktrans %}</p>
                 </div>
                 <div class="body-footer__poweredby">
                     <a href="https://github.com/openfun/richie" class="body-footer__poweredby__link">
