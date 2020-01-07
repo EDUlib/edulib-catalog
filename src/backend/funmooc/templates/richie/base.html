@@ -3,7 +3,7 @@
 <html lang="{{ LANGUAGE_CODE }}">
     <head>
         {% spaceless %}
-        <title>{% block title %}{{ SITE.name }}{% endblock title %}</title>
+        <title>{% block head_title %}{{ SITE.name }}{% endblock head_title %}</title>
         <meta name="viewport" content="width=device-width,initial-scale=1">
         {% block meta %}
             {% block meta_index_rules %}
@@ -40,7 +40,9 @@
 
         {% render_block "css" %}
 
+        {% block css_links %}
         <link rel="stylesheet" type="text/css" href="{% static 'richie/css/main.css' %}">
+        {% endblock css_links %}
     </head>
     <body>
         {% cms_toolbar %}
@@ -112,8 +114,8 @@
         </div>
 
         {% render_block "js" %}
-        <script type="text/javascript" src="{% static 'richie/js/index.js' %}"></script>
-        <script type="text/javascript">
+        <script src="{% static 'richie/js/index.js' %}"></script>
+        <script>
         document.addEventListener('DOMContentLoaded', () => {
             // Get all topbar burger elements
             const $topbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.topbar__hamburger'), 0);
