@@ -17,7 +17,7 @@ $richie-program-glimpse-container-width-xl: 25% !default;
 $richie-program-glimpse-container-gutter: 0.5rem !default;
 $richie-program-glimpse-container-background: $white !default;
 $richie-program-glimpse-container-border: 1px solid $gray80 !default;
-$richie-program-glimpse-container-border-hover: 1px solid $firebrick6 !default;
+$richie-program-glimpse-container-border-hover: 1px solid $edulib5 !default;
 $richie-program-glimpse-container-border-radius: 0.25rem !default;
 
 $richie-program-glimpse-media-width: null !default;
@@ -40,7 +40,7 @@ $richie-program-glimpse-content-textalign: center !default;
 $richie-program-glimpse-title-margin: 0 0 0.1rem !default;
 $richie-program-glimpse-title-fontsize: 0.9rem !default;
 $richie-program-glimpse-title-fontweight: bold !default;
-$richie-program-glimpse-title-fontcolor: $dodgerblue3 !default;
+$richie-program-glimpse-title-fontcolor: $edulib3 !default;
 
 $richie-program-glimpse-wrapper-padding: 0.6rem 0.2rem !default;
 
@@ -61,8 +61,8 @@ $richie-program-glimpse-foot-cta-fontsize: 0.9rem !default;
 $richie-program-glimpse-foot-cta-fontweight: bold !default;
 $richie-program-glimpse-foot-cta-fontcolor: $white !default;
 $richie-program-glimpse-foot-cta-textalign: center !default;
-$richie-program-glimpse-foot-cta-background: $dodgerblue5 !default;
-$richie-program-glimpse-foot-cta-background-hover: $firebrick6 !default;
+$richie-program-glimpse-foot-cta-background: $edulib3 !default;
+$richie-program-glimpse-foot-cta-background-hover: $edulib5 !default;
 
 .program-glimpse-list {
   @if $richie-program-glimpse-list-maxwidth-constraint {

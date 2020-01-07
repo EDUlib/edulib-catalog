@@ -1,11 +1,11 @@
 import React, { useContext } from 'react';
 import { defineMessages, FormattedMessage } from 'react-intl';
 
-import { CourseSearchParamsContext } from '../../data/useCourseSearchParams/useCourseSearchParams';
-import { API_LIST_DEFAULT_PARAMS } from '../../settings';
-import { APICourseSearchResponse } from '../../types/api';
-import { Nullable } from '../../utils/types';
-import { SearchFilterGroup } from '../SearchFilterGroup/SearchFilterGroup';
+import { SearchFilterGroup } from 'components/SearchFilterGroup';
+import { CourseSearchParamsContext } from 'data/useCourseSearchParams';
+import { API_LIST_DEFAULT_PARAMS } from 'settings';
+import { APICourseSearchResponse } from 'types/api';
+import { Nullable } from 'utils/types';
 
 interface SearchFiltersPaneProps {
   filters: Nullable<APICourseSearchResponse['filters']>;
@@ -26,7 +26,14 @@ const messages = defineMessages({
   },
 });
 
-export const SearchFiltersPane = ({ filters }: SearchFiltersPaneProps) => {
+export const SearchFiltersPane = ({
+  filters,
+  ...passThroughProps
+}: SearchFiltersPaneProps &
+  React.DetailedHTMLProps<
+    React.HTMLAttributes<HTMLDivElement>,
+    HTMLDivElement
+  >) => {
   const filterList = filters && Object.values(filters);
 
   const [courseSearchParams, dispatchCourseSearchParamsUpdate] = useContext(
@@ -47,7 +54,7 @@ export const SearchFiltersPane = ({ filters }: SearchFiltersPaneProps) => {
     .concat(...activeFilters).length;
 
   return (
-    <div className="search-filters-pane">
+    <div className="search-filters-pane" {...passThroughProps}>
       <h2 className="search-filters-pane__title">
         <FormattedMessage {...messages.filter} />
       </h2>
