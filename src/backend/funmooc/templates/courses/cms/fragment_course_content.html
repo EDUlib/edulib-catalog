@@ -1,60 +1,72 @@
 {% load cms_tags i18n extra_tags %}
 
-<div class="course-detail__content__row course-detail__content__teaser">
-  {% page_placeholder "course_teaser" page or %}
-    <div class="course-detail__content__row course-detail__content__teaser__empty">{% trans 'Add a video or teaser.' %}</div>
-  {% endpage_placeholder %}
-</div>
-
-{% if page.publisher_is_draft or not page|is_empty_placeholder:"course_description" %}
-<section class="course-detail__content__row course-detail__content__description">
-  <h2 class="course-detail__content__row__title">{% trans 'About the course' %}</h2>
-  {% with header_level=3 %}
-    {% page_placeholder "course_description" page or %}
-      <p>{% trans 'Enter here a description of your course.' %}</p>
-    {% endpage_placeholder %}
-  {% endwith %}
-</section>
-{% endif %}
-
-{% if page.publisher_is_draft or not page|is_empty_placeholder:"course_information" %}
-<div class="course-detail__content__row course-detail__content__information">
-  {% page_placeholder "course_information" page %}
-</div>
-{% endif %}
-
-{% if page.publisher_is_draft or not page|is_empty_placeholder:"course_team" %}
-<section class="section course-detail__content__row course-detail__content__team">
-  <h2 class="section.title course-detail__content__row__title course-detail__content__team__title">
-    {% trans 'Course team' %}
-  </h2>
-  {% with header_level=3 %}
-    <div class="section__items course-detail__content__team__items">
-      {% page_placeholder "course_team" page or %}
-        <p>{% trans 'Who are the teachers in the course team?' %}</p>
-      {% endpage_placeholder %}
-    </div>
-  {% endwith %}
-</section>
-{% endif %}
-
-{% if page.publisher_is_draft or not page|is_empty_placeholder:"course_more_information" %}
-<div class="course-detail__content__row course-detail__content__information">
-  {% page_placeholder "course_more_information" page %}
-</div>
-{% endif %}
-
-{% if page.publisher_is_draft or not page|is_empty_placeholder:"course_organizations" %}
-<section class="section course-detail__content__row course-detail__content__organizations">
-  <h2 class="section__title course-detail__content__row__title course-detail__content__organizations__title">
-    {% trans 'Organizations' %}
-  </h2>
-  <div class="section__items course-detail__content__organizations__items">
-    {% page_placeholder "course_organizations" page or %}
-      <p class="course-detail__content__organizations__placeholder">
-        {% trans "What are the organizations publishing this course?" %}
-      </p>
+{% block teaser %}
+  <div class="course-detail__content__row course-detail__content__teaser">
+    {% page_placeholder "course_teaser" page or %}
+      <div class="course-detail__content__row course-detail__content__teaser__empty">{% trans 'Add a video or teaser.' %}</div>
     {% endpage_placeholder %}
   </div>
-</section>
-{% endif %}
+{% endblock teaser %}
+
+{% block description %}
+  {% if page.publisher_is_draft or not page|is_empty_placeholder:"course_description" %}
+  <section class="course-detail__content__row course-detail__content__description">
+    <h2 class="course-detail__content__row__title">{% trans 'About the course' %}</h2>
+    {% with header_level=3 %}
+      {% page_placeholder "course_description" page or %}
+        <p>{% trans 'Enter here a description of your course.' %}</p>
+      {% endpage_placeholder %}
+    {% endwith %}
+  </section>
+  {% endif %}
+{% endblock description %}
+
+{% block information %}
+  {% if page.publisher_is_draft or not page|is_empty_placeholder:"course_information" %}
+  <div class="course-detail__content__row course-detail__content__information">
+    {% page_placeholder "course_information" page %}
+  </div>
+  {% endif %}
+{% endblock information %}
+
+{% block team %}
+  {% if page.publisher_is_draft or not page|is_empty_placeholder:"course_team" %}
+  <section class="section course-detail__content__row course-detail__content__team">
+    <h2 class="section.title course-detail__content__row__title course-detail__content__team__title">
+      {% trans 'Course team' %}
+    </h2>
+    {% with header_level=3 %}
+      <div class="section__items course-detail__content__team__items">
+        {% page_placeholder "course_team" page or %}
+          <p>{% trans 'Who are the teachers in the course team?' %}</p>
+        {% endpage_placeholder %}
+      </div>
+    {% endwith %}
+  </section>
+  {% endif %}
+{% endblock team %}
+
+{% block more_information %}
+  {% if page.publisher_is_draft or not page|is_empty_placeholder:"course_more_information" %}
+  <div class="course-detail__content__row course-detail__content__information">
+    {% page_placeholder "course_more_information" page %}
+  </div>
+  {% endif %}
+{% endblock more_information %}
+
+{% block organizations %}
+  {% if page.publisher_is_draft or not page|is_empty_placeholder:"course_organizations" %}
+  <section class="section course-detail__content__row course-detail__content__organizations">
+    <h2 class="section__title course-detail__content__row__title course-detail__content__organizations__title">
+      {% trans 'Organizations' %}
+    </h2>
+    <div class="section__items course-detail__content__organizations__items">
+      {% page_placeholder "course_organizations" page or %}
+        <p class="course-detail__content__organizations__placeholder">
+          {% trans "What are the organizations publishing this course?" %}
+        </p>
+      {% endpage_placeholder %}
+    </div>
+  </section>
+  {% endif %}
+{% endblock organizations %}
