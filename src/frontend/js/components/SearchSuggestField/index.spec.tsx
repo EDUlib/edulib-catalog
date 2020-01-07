@@ -1,14 +1,14 @@
-import '../../testSetup';
+import 'testSetup';
 
 import { fireEvent, render, wait } from '@testing-library/react';
 import fetchMock from 'fetch-mock';
 import React from 'react';
 import { IntlProvider } from 'react-intl';
 
-import { CourseSearchParamsContext } from '../../data/useCourseSearchParams/useCourseSearchParams';
-import { SearchSuggestField } from './SearchSuggestField';
+import { CourseSearchParamsContext } from 'data/useCourseSearchParams';
+import { SearchSuggestField } from '.';
 
-jest.mock('../../utils/indirection/window', () => ({ location: {} }));
+jest.mock('utils/indirection/window', () => ({ location: {} }));
 
 // Unexplained difficulties with fake timers were encountered in these tests.
 // We decided to mock the debounce function instead.

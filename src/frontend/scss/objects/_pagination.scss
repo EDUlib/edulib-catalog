@@ -15,8 +15,8 @@
       list-style-type: none;
       display: flex;
       background: white;
-      border: 1px solid $dodgerblue1;
-      color: $dodgerblue1;
+      border: 1px solid $edulib1;
+      color: $edulib1;
       cursor: pointer;
 
       & + & {
@@ -24,7 +24,7 @@
       }
 
       &--current {
-        background: $dodgerblue1;
+        background: $edulib1;
         color: white;
         cursor: default;
       }
