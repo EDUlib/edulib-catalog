@@ -100,10 +100,12 @@
                     <p>{% now "Y" %} &copy; EDUlib {% blocktrans %}All Rights Reserved.{% endblocktrans %}</p>
                 </div>
                 <div class="body-footer__poweredby">
-                    <a href="https://github.com/openfun/richie" class="body-footer__poweredby__link">
+                    <p>
                         <small>Powered by</small>
-                        <strong>Richie</strong>
-                    </a>
+                        <a class="body-footer__poweredby__link" href="https://open.edx.org/"><strong>open edX</strong></a>
+                         &
+                        <a class="body-footer__poweredby__link" href="https://github.com/openfun/richie"><strong>Richie</strong></a>
+                    </p>
                 </div>
             </div>
             {% endblock body_footer %}

@@ -158,18 +158,20 @@ $richie-footer-poweredby-link-fontcolor: $white !default;
     @include sv-flex(0, 0, auto);
     display: flex;
     padding: $richie-footer-poweredby-padding;
+    text-align: right;
     order: 2;
 
     @include media-breakpoint-up(lg) {
       order: 3;
     }
 
+    small {
+      line-height: 1.1;
+      display: block;
+    }
+
     &__link {
       @include sv-flex(1, 0, 100%);
-      display: flex;
-      flex-direction: column;
-      flex-wrap: nowrap;
-      justify-content: center;
       color: $richie-footer-poweredby-link-fontcolor;
 
       small {
