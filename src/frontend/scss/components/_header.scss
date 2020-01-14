@@ -51,7 +51,7 @@ $richie-topbar-menu-cta-fontcolor: $white !default;
 $richie-topbar-menu-cta-fontweight: bold !default;
 $richie-topbar-menu-cta-background: $edulib3 !default;
 
-$richie-topbar-menu-cta-hollow-fontcolor: $edulib5 !default;
+$richie-topbar-menu-cta-hollow-fontcolor: $edulib3 !default;
 $richie-topbar-menu-cta-hollow-fontweight: bold !default;
 $richie-topbar-menu-cta-hollow-background: $white !default;
 
@@ -164,6 +164,8 @@ $richie-topbar-menu-item-divider-border-lg: 1px solid $white !default;
 
         @include sv-flex(1, 0, auto);
         display: flex;
+        align-items: center;
+        min-height: 3rem;
         margin: $richie-topbar-menu-item-margin;
         padding: $richie-topbar-menu-item-padding;
         color: $richie-topbar-menu-item-fontcolor;
@@ -269,6 +271,16 @@ $richie-topbar-menu-item-divider-border-lg: 1px solid $white !default;
   &.is-open {
     #{$topbar-selector}__menu {
       display: flex;
+    }
+  }
+
+  .richie-react.richie-react--user-login {
+    display: flex;
+    width: 100%;
+
+    @include media-breakpoint-up($richie-topbar-breakpoint) {
+      width: auto;
+      margin: 0 0 0 1rem;
     }
   }
 }

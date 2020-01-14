@@ -4,8 +4,8 @@ import { defineMessages, FormattedMessage } from 'react-intl';
 import { CourseGlimpseList } from 'components/CourseGlimpseList';
 import { PaginateCourseSearch } from 'components/PaginateCourseSearch';
 import { SearchFiltersPane } from 'components/SearchFiltersPane';
-import { SearchLoader } from 'components/SearchLoader';
 import { SearchSuggestField } from 'components/SearchSuggestField';
+import { Spinner } from 'components/Spinner';
 import { useCourseSearch } from 'data/useCourseSearch';
 import {
   CourseSearchParamsContext,
@@ -27,6 +27,12 @@ const messages = defineMessages({
     description:
       'Accessibility text for the button/icon that toggles *on* the filters pane on mobile',
     id: 'components.Search.showFiltersPane',
+  },
+  spinnerText: {
+    defaultMessage: 'Loading search results...',
+    description:
+      'Accessibility text for the spinner while search results are being loaded',
+    id: 'components.Search.spinnerText',
   },
 });
 
@@ -108,9 +114,7 @@ export const Search = ({
           {courseSearchResponse &&
           courseSearchResponse.status === requestStatus.SUCCESS ? (
             <React.Fragment>
-              <SearchSuggestField
-                filters={courseSearchResponse.content.filters}
-              />
+              <SearchSuggestField />
               <CourseGlimpseList
                 courses={courseSearchResponse.content.objects}
                 meta={courseSearchResponse.content.meta}
@@ -122,7 +126,9 @@ export const Search = ({
               />
             </React.Fragment>
           ) : (
-            <SearchLoader />
+            <Spinner size="large">
+              <FormattedMessage {...messages.spinnerText} />
+            </Spinner>
           )}
           {!alwaysShowFilters && (
             <div

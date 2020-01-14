@@ -6,6 +6,7 @@ import React from 'react';
 import { IntlProvider } from 'react-intl';
 
 import { CourseSearchParamsContext } from 'data/useCourseSearchParams';
+import { FilterDefinition } from 'types/filters';
 import { SearchSuggestField } from '.';
 
 jest.mock('utils/indirection/window', () => ({ location: {} }));
@@ -17,45 +18,41 @@ jest.mock('lodash-es/debounce', () => (fn: any) => (...args: any[]) =>
 );
 
 describe('components/SearchSuggestField', () => {
-  // Make some filters we can reuse through our tests in <SearchSuggestField /> props
-  const levels = {
+  // Make some filters we can reuse through our tests with the filter definitions responses
+  const levels: FilterDefinition = {
     base_path: '00030002',
-    has_more_values: false,
     human_name: 'Levels',
     is_autocompletable: false,
     is_searchable: false,
     name: 'levels',
-    values: [],
+    position: 0,
   };
 
-  const organizations = {
+  const organizations: FilterDefinition = {
     base_path: '0002',
-    has_more_values: false,
     human_name: 'Organizations',
     is_autocompletable: true,
     is_searchable: true,
     name: 'organizations',
-    values: [],
+    position: 1,
   };
 
-  const persons = {
+  const persons: FilterDefinition = {
     base_path: null,
-    has_more_values: false,
     human_name: 'Persons',
     is_autocompletable: true,
     is_searchable: true,
     name: 'persons',
-    values: [],
+    position: 2,
   };
 
-  const subjects = {
+  const subjects: FilterDefinition = {
     base_path: '00030001',
-    has_more_values: false,
     human_name: 'Subjects',
     is_autocompletable: true,
     is_searchable: true,
     name: 'subjects',
-    values: [],
+    position: 3,
   };
 
   afterEach(fetchMock.restore);
@@ -67,7 +64,7 @@ describe('components/SearchSuggestField', () => {
         <CourseSearchParamsContext.Provider
           value={[{ limit: '999', offset: '0' }, jest.fn()]}
         >
-          <SearchSuggestField filters={{}} />
+          <SearchSuggestField />
         </CourseSearchParamsContext.Provider>
       </IntlProvider>,
     );
@@ -76,7 +73,7 @@ describe('components/SearchSuggestField', () => {
     getByPlaceholderText('Search for courses, organizations, categories');
   });
 
-  it('picks the query from the URL if there is one', async () => {
+  it('picks the query from the URL if there is one', () => {
     const { getByDisplayValue } = render(
       <IntlProvider locale="en">
         <CourseSearchParamsContext.Provider
@@ -85,7 +82,7 @@ describe('components/SearchSuggestField', () => {
             jest.fn(),
           ]}
         >
-          <SearchSuggestField filters={{}} />
+          <SearchSuggestField />
         </CourseSearchParamsContext.Provider>
       </IntlProvider>,
     );
@@ -95,6 +92,13 @@ describe('components/SearchSuggestField', () => {
   });
 
   it('gets suggestions from the API when the user types something in the field', async () => {
+    fetchMock.get('/api/v1.0/filter-definitions/', {
+      levels,
+      organizations,
+      persons,
+      subjects,
+    });
+
     fetchMock.get('/api/v1.0/subjects/autocomplete/?query=aut', [
       {
         id: 'L-000300010001',
@@ -110,9 +114,7 @@ describe('components/SearchSuggestField', () => {
         <CourseSearchParamsContext.Provider
           value={[{ limit: '999', offset: '0' }, jest.fn()]}
         >
-          <SearchSuggestField
-            filters={{ levels, organizations, persons, subjects }}
-          />
+          <SearchSuggestField />
         </CourseSearchParamsContext.Provider>
       </IntlProvider>,
     );
@@ -149,6 +151,13 @@ describe('components/SearchSuggestField', () => {
   });
 
   it('does not attempt to get or show any suggestions before the user types 3 characters', async () => {
+    fetchMock.get('/api/v1.0/filter-definitions/', {
+      levels,
+      organizations,
+      persons,
+      subjects,
+    });
+
     ['organizations', 'persons', 'subjects'].forEach(kind =>
       fetchMock.get(`/api/v1.0/${kind}/autocomplete/?query=xyz`, []),
     );
@@ -158,9 +167,7 @@ describe('components/SearchSuggestField', () => {
         <CourseSearchParamsContext.Provider
           value={[{ limit: '999', offset: '0' }, jest.fn()]}
         >
-          <SearchSuggestField
-            filters={{ levels, organizations, persons, subjects }}
-          />
+          <SearchSuggestField />
         </CourseSearchParamsContext.Provider>
       </IntlProvider>,
     );
@@ -192,6 +199,13 @@ describe('components/SearchSuggestField', () => {
   });
 
   it('updates the search params when the user selects a filter suggestion', async () => {
+    fetchMock.get('/api/v1.0/filter-definitions/', {
+      levels,
+      organizations,
+      persons,
+      subjects,
+    });
+
     fetchMock.get('/api/v1.0/organizations/autocomplete/?query=orga', [
       {
         id: 'L-00020007',
@@ -212,9 +226,7 @@ describe('components/SearchSuggestField', () => {
             dispatchCourseSearchParamsUpdate,
           ]}
         >
-          <SearchSuggestField
-            filters={{ levels, organizations, persons, subjects }}
-          />
+          <SearchSuggestField />
         </CourseSearchParamsContext.Provider>
       </IntlProvider>,
     );
@@ -257,21 +269,20 @@ describe('components/SearchSuggestField', () => {
       type: 'QUERY_UPDATE',
     });
     expect(dispatchCourseSearchParamsUpdate).toHaveBeenCalledWith({
-      filter: {
-        base_path: '0002',
-        has_more_values: false,
-        human_name: 'Organizations',
-        is_autocompletable: true,
-        is_searchable: true,
-        name: 'organizations',
-        values: [],
-      },
+      filter: organizations,
       payload: 'L-00020007',
       type: 'FILTER_ADD',
     });
   });
 
   it('updates the search params when the user selects a filter suggestion', async () => {
+    fetchMock.get('/api/v1.0/filter-definitions/', {
+      levels,
+      organizations,
+      persons,
+      subjects,
+    });
+
     fetchMock.get('/api/v1.0/persons/autocomplete/?query=doct', [
       {
         id: '73',
@@ -292,9 +303,7 @@ describe('components/SearchSuggestField', () => {
             dispatchCourseSearchParamsUpdate,
           ]}
         >
-          <SearchSuggestField
-            filters={{ levels, organizations, persons, subjects }}
-          />
+          <SearchSuggestField />
         </CourseSearchParamsContext.Provider>
       </IntlProvider>,
     );
@@ -333,21 +342,20 @@ describe('components/SearchSuggestField', () => {
     await wait();
 
     expect(dispatchCourseSearchParamsUpdate).toHaveBeenCalledWith({
-      filter: {
-        base_path: null,
-        has_more_values: false,
-        human_name: 'Persons',
-        is_autocompletable: true,
-        is_searchable: true,
-        name: 'persons',
-        values: [],
-      },
+      filter: persons,
       payload: '73',
       type: 'FILTER_ADD',
     });
   });
 
   it('removes the search query when the user presses ENTER on an empty field', async () => {
+    fetchMock.get('/api/v1.0/filter-definitions/', {
+      levels,
+      organizations,
+      persons,
+      subjects,
+    });
+
     ['organizations', 'persons', 'subjects'].forEach(kind =>
       fetchMock.get(`/api/v1.0/${kind}/autocomplete/?query=some%20query`, []),
     );
@@ -361,9 +369,7 @@ describe('components/SearchSuggestField', () => {
             dispatchCourseSearchParamsUpdate,
           ]}
         >
-          <SearchSuggestField
-            filters={{ levels, organizations, persons, subjects }}
-          />
+          <SearchSuggestField />
         </CourseSearchParamsContext.Provider>
       </IntlProvider>,
     );
@@ -384,7 +390,14 @@ describe('components/SearchSuggestField', () => {
     });
   });
 
-  it('searches as the user types', () => {
+  it('searches as the user types', async () => {
+    fetchMock.get('/api/v1.0/filter-definitions/', {
+      levels,
+      organizations,
+      persons,
+      subjects,
+    });
+
     ['organizations', 'persons', 'subjects'].forEach(kind =>
       fetchMock.get(`begin:/api/v1.0/${kind}/autocomplete/?query=`, []),
     );
@@ -398,9 +411,7 @@ describe('components/SearchSuggestField', () => {
             dispatchCourseSearchParamsUpdate,
           ]}
         >
-          <SearchSuggestField
-            filters={{ levels, organizations, persons, subjects }}
-          />
+          <SearchSuggestField />
         </CourseSearchParamsContext.Provider>
       </IntlProvider>,
     );
@@ -416,18 +427,21 @@ describe('components/SearchSuggestField', () => {
     expect(dispatchCourseSearchParamsUpdate).not.toHaveBeenCalled();
 
     fireEvent.change(field, { target: { value: 'ric' } });
+    await wait();
     expect(dispatchCourseSearchParamsUpdate).toHaveBeenCalledWith({
       query: 'ric',
       type: 'QUERY_UPDATE',
     });
 
     fireEvent.change(field, { target: { value: 'rich data driven' } });
+    await wait();
     expect(dispatchCourseSearchParamsUpdate).toHaveBeenLastCalledWith({
       query: 'rich data driven',
       type: 'QUERY_UPDATE',
     });
 
     fireEvent.change(field, { target: { value: '' } });
+    await wait();
     expect(dispatchCourseSearchParamsUpdate).toHaveBeenLastCalledWith({
       query: '',
       type: 'QUERY_UPDATE',
