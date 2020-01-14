@@ -1,6 +1,6 @@
-{% load i18n cms_tags menu_tags static sekizai_tags %}
+{% load i18n cms_tags menu_tags rfc_5646_locale static sekizai_tags %}
 <!doctype html>
-<html lang="{{ LANGUAGE_CODE }}">
+<html lang="{{ LANGUAGE_CODE|rfc_5646_locale }}">
     <head>
         {% spaceless %}
         <title>{% block head_title %}{{ SITE.name }}{% endblock head_title %}</title>
@@ -63,15 +63,15 @@
                     <ul class="topbar__menu__list">
                         {% show_menu 0 100 0 0 "menu/header_menu.html" %}
                     </ul>
-                    <ul class="topbar__menu__list topbar__menu__list--aside">
-                        {% language_chooser "menu/language_menu.html" %}
-                        <li class="topbar__menu__list__item topbar__menu__list__item--cta-hollow">
-                            <a class="topbar__menu__list__item__link" href="https://cours.edulib.org/register?next=/dashboard">{% trans "Sign up" %}</a>
-                        </li>
-                        <li class="topbar__menu__list__item topbar__menu__list__item--cta">
-                            <a class="topbar__menu__list__item__link" href="https://cours.edulib.org/login?next=/dashboard">{% trans "Login" %}</a>
-                        </li>
-                    </ul>
+                    {% language_chooser "menu/language_menu.html" %}
+                    {% block userlogin %}
+                    <div
+                      class="richie-react richie-react--user-login"
+                      data-props='{"loginUrl": "{% url 'admin:index' %}",
+                      "logoutUrl": "{% url 'logout' %}",
+                      "signupUrl": "{% url 'admin:index' %}"}'
+                    ></div>
+                    {% endblock userlogin %}
                 </div>
             </nav>
             {% endblock body_header %}
@@ -88,13 +88,11 @@
             {% block body_footer %}
             <div class="body-footer">
                 <div class="body-footer__menu">
-                    <ul class="body-footer__menu__list">
-                        {% show_menu_below_id "annex" 0 2 100 100 "menu/footer_menu.html" %}
-                    </ul>
+                  {% static_placeholder "footer" %}
                 </div>
                 <div class="body-footer__brand">
                     <a href="/" class="body-footer__brand__link">
-                        <img src="{% static "richie/images/edulib_blanc.png" %}" class="body-footer__brand__logo" alt="">
+                        <img src="{% static "richie/images/edulib_blanc.png" %}" class="body-footer__brand__logo" alt="{{ SITE.name }}">
                     </a>
                     {% include "social-networks/footer-badges.html" %}
                 </div>
