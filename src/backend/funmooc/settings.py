@@ -240,7 +240,7 @@ class Base(DRFMixin, RichieCoursesConfigurationMixin, Configuration):
         },
         1: [
             {
-                "public": False,
+                "public": True,
                 "code": "en",
                 "hide_untranslated": False,
                 "name": _("English"),
