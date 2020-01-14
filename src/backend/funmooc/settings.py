@@ -18,10 +18,8 @@ DATA_DIR = os.path.join("/", "data")
 
 def get_release():
     """Get current release of the application
-
     By release, we mean the release from the version.json file à la Mozilla [1]
     (if any). If this file has not been found, it defaults to "NA".
-
     [1]
     https://github.com/mozilla-services/Dockerflow/blob/master/docs/version_object.md
     """
@@ -60,14 +58,10 @@ class Base(DRFMixin, RichieCoursesConfigurationMixin, Configuration):
     This is the base configuration every configuration (aka environnement) should inherit from. It
     is recommended to configure third-party applications by creating a configuration mixins in
     ./configurations and compose the Base configuration with those mixins.
-
     It depends on an environment variable that SHOULD be defined:
-
     * DJANGO_SECRET_KEY
-
     You may also want to override default configuration by setting the following environment
     variables:
-
     * DJANGO_SENTRY_DSN
     * RICHIE_ES_HOST
     * DB_NAME
@@ -98,7 +92,7 @@ class Base(DRFMixin, RichieCoursesConfigurationMixin, Configuration):
                 environ_prefix=None,
             ),
             "NAME": values.Value(
-                "funmooc", environ_name="DB_NAME", environ_prefix=None
+                "edulib", environ_name="DB_NAME", environ_prefix=None
             ),
             "USER": values.Value("fun", environ_name="DB_USER", environ_prefix=None),
             "PASSWORD": values.Value(
@@ -118,6 +112,10 @@ class Base(DRFMixin, RichieCoursesConfigurationMixin, Configuration):
     MEDIA_ROOT = os.path.join(DATA_DIR, "media")
     STATIC_ROOT = os.path.join(DATA_DIR, "static")
     STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
+
+    # Login/registration related settings
+    LOGIN_REDIRECT_URL = "/"
+    LOGOUT_REDIRECT_URL = "/"
 
     # Internationalization
     TIME_ZONE = "Europe/Paris"
@@ -224,7 +222,7 @@ class Base(DRFMixin, RichieCoursesConfigurationMixin, Configuration):
     # fallback/default languages throughout the app.
     # Use "en" as default as it is the language that is most likely to be spoken by any visitor
     # when their preferred language, whatever it is, is unavailable
-    LANGUAGES = (("en", _("English")), ("fr", _("French")))
+    LANGUAGES = (("fr", _("French")), ("en", _("English")))
 
     # - Django CMS
     CMS_LANGUAGES = {
@@ -232,7 +230,7 @@ class Base(DRFMixin, RichieCoursesConfigurationMixin, Configuration):
             "public": True,
             "hide_untranslated": False,
             "redirect_on_fallback": True,
-            "fallbacks": ["en", "fr"],
+            "fallbacks": ["fr", "en"],
         },
         1: [
             {
@@ -324,11 +322,275 @@ class Base(DRFMixin, RichieCoursesConfigurationMixin, Configuration):
                 integrations=[DjangoIntegration()],
             )
 
+    RICHIE_FILTERS_CONFIGURATION = [
+        #(
+            #"richie.apps.search.filter_definitions.StaticChoicesFilterDefinition",
+            #{
+                #"fragment_map": {"new": [{"term": {"is_new": True}}]},
+                #"human_name": _("New courses"),
+                #"min_doc_count": 0,
+                #"name": "new",
+                #"position": 0,
+                #"values": {"new": _("First session")},
+            #},
+        #),
+        (
+            "richie.apps.search.filter_definitions.NestingWrapper",
+            {
+                "name": "course_runs",
+                "filters": [
+                    (
+                        "richie.apps.search.filter_definitions.AvailabilityFilterDefinition",
+                        {
+                            "human_name": _("Availability"),
+                            "is_drilldown": True,
+                            "min_doc_count": 0,
+                            "name": "availability",
+                            "position": 1,
+                        },
+                    ),
+                    (
+                        "richie.apps.search.filter_definitions.LanguagesFilterDefinition",
+                        {
+                            "human_name": _("Languages"),
+                            # There are too many available languages to show them all, all the time.
+                            # Eg. 200 languages, 190+ of which will have 0 matching courses.
+                            "min_doc_count": 1,
+                            "name": "languages",
+                            "position": 5,
+                            "sorting": "count",
+                        },
+                    ),
+                ],
+            },
+        ),
+        (
+            "richie.apps.search.filter_definitions.IndexableMPTTFilterDefinition",
+            {
+                "human_name": _("Subjects"),
+                "is_autocompletable": True,
+                "is_searchable": True,
+                "min_doc_count": 0,
+                "name": "subjects",
+                "position": 2,
+                "reverse_id": "subjects",
+                "term": "categories",
+            },
+        ),
+        #(
+            #"richie.apps.search.filter_definitions.IndexableMPTTFilterDefinition",
+            #{
+                #"human_name": _("Levels"),
+                #"is_autocompletable": True,
+                #"is_searchable": True,
+                #"min_doc_count": 0,
+                #"name": "levels",
+                #"position": 3,
+                #"reverse_id": "levels",
+                #"term": "categories",
+            #},
+        #),
+        (
+            "richie.apps.search.filter_definitions.IndexableMPTTFilterDefinition",
+            {
+                "human_name": _("Organizations"),
+                "is_autocompletable": True,
+                "is_searchable": True,
+                "min_doc_count": 0,
+                "name": "organizations",
+                "position": 4,
+                "reverse_id": "organizations",
+            },
+        ),
+        (
+            "richie.apps.search.filter_definitions.IndexableFilterDefinition",
+            {
+                "human_name": _("Persons"),
+                "is_autocompletable": True,
+                "is_searchable": True,
+                "min_doc_count": 0,
+                "name": "persons",
+                "position": 5,
+                "reverse_id": "persons",
+            },
+        ),
+    ]
+
+    # Placeholders limits and restrictions
+    CMS_PLACEHOLDER_CONF = {
+        # Homepage
+        "richie/homepage.html maincontent": {
+            "name": _("Main content"),
+            "plugins": ["LargeBannerPlugin", "SectionPlugin"],
+            "child_classes": {
+                "SectionPlugin": [
+                    "BlogPostPlugin",
+                    "CoursePlugin",
+                    "CategoryPlugin",
+                    "CKEditorPlugin",
+                    "LinkPlugin",
+                    "OrganizationPlugin",
+                    "PersonPlugin",
+                ]
+            },
+        },
+        # Single column page
+        "richie/single-column.html maincontent": {
+            "name": _("Main content"),
+            "excluded_plugins": ["CKEditorPlugin", "GoogleMapPlugin"],
+            "parent_classes": {
+                "BlogPostPlugin": ["SectionPlugin"],
+                "CategoryPlugin": ["SectionPlugin"],
+                "CoursePlugin": ["SectionPlugin"],
+                "OrganizationPlugin": ["SectionPlugin"],
+                "PersonPlugin": ["SectionPlugin"],
+            },
+            "child_classes": {
+                "SectionPlugin": [
+                    "BlogPostPlugin",
+                    "CategoryPlugin",
+                    "CoursePlugin",
+                    "LinkPlugin",
+                    "OrganizationPlugin",
+                    "PersonPlugin",
+                ]
+            },
+        },
+        # Course detail
+        "courses/cms/course_detail.html course_cover": {
+            "name": _("Cover"),
+            "plugins": ["SimplePicturePlugin"],
+            "limits": {"SimplePicturePlugin": 1},
+        },
+        "courses/cms/course_detail.html course_introduction": {
+            "name": _("Catch phrase"),
+            "plugins": ["PlainTextPlugin"],
+            "limits": {"PlainTextPlugin": 1},
+        },
+        "courses/cms/course_detail.html course_teaser": {
+            "name": _("Teaser"),
+            "plugins": ["VideoPlayerPlugin", "SimplePicturePlugin"],
+            "limits": {"VideoPlayerPlugin": 1, "SimplePicturePlugin": 1},
+        },
+        "courses/cms/course_detail.html course_description": {
+            "name": _("About the course"),
+            "plugins": ["CKEditorPlugin"],
+        },
+        "courses/cms/course_detail.html course_team": {
+            "name": _("Team"),
+            "plugins": ["PersonPlugin"],
+        },
+        "courses/cms/course_detail.html course_plan": {
+            "name": _("Plan"),
+            "plugins": ["CKEditorPlugin"],
+        },
+        "courses/cms/course_detail.html course_information": {
+            "name": _("Complementary information"),
+            "plugins": ["SectionPlugin"],
+        },
+        "courses/cms/course_detail.html course_more_information": {
+            "name": _("Complementary information"),
+            "plugins": ["SectionPlugin"],
+        },
+        "courses/cms/course_detail.html course_categories": {
+            "name": _("Categories"),
+            "plugins": ["CategoryPlugin"],
+        },
+        "courses/cms/course_detail.html course_icons": {
+            "name": _("Icon"),
+            "plugins": ["CategoryPlugin"],
+            "limits": {"CategoryPlugin": 1},
+        },
+        "courses/cms/course_detail.html course_organizations": {
+            "name": _("Organizations"),
+            "plugins": ["OrganizationPlugin"],
+        },
+        # Organization detail
+        "courses/cms/organization_detail.html banner": {
+            "name": _("Banner"),
+            "plugins": ["SimplePicturePlugin"],
+            "limits": {"SimplePicturePlugin": 1},
+        },
+        "courses/cms/organization_detail.html logo": {
+            "name": _("Logo"),
+            "plugins": ["SimplePicturePlugin"],
+            "limits": {"SimplePicturePlugin": 1},
+        },
+        "courses/cms/organization_detail.html description": {
+            "name": _("Description"),
+            "plugins": ["CKEditorPlugin"],
+            "limits": {"CKEditorPlugin": 1},
+        },
+        # Category detail
+        "courses/cms/category_detail.html banner": {
+            "name": _("Banner"),
+            "plugins": ["SimplePicturePlugin"],
+            "limits": {"SimplePicturePlugin": 1},
+        },
+        "courses/cms/category_detail.html logo": {
+            "name": _("Logo"),
+            "plugins": ["SimplePicturePlugin"],
+            "limits": {"SimplePicturePlugin": 1},
+        },
+        "courses/cms/category_detail.html icon": {
+            "name": _("Icon"),
+            "plugins": ["SimplePicturePlugin"],
+            "limits": {"SimplePicturePlugin": 1},
+        },
+        "courses/cms/category_detail.html description": {
+            "name": _("Description"),
+            "plugins": ["CKEditorPlugin"],
+            "limits": {"CKEditorPlugin": 1},
+        },
+        # Person detail
+        "courses/cms/person_detail.html categories": {
+            "name": _("Categories"),
+            "plugins": ["CategoryPlugin"],
+        },
+        "courses/cms/person_detail.html portrait": {
+            "name": _("Portrait"),
+            "plugins": ["SimplePicturePlugin"],
+            "limits": {"SimplePicturePlugin": 1},
+        },
+        "courses/cms/person_detail.html bio": {
+            "name": _("Bio"),
+            "plugins": ["PlainTextPlugin"],
+            "limits": {"PlainTextPlugin": 1},
+        },
+        "courses/cms/person_detail.html organizations": {
+            "name": _("Organizations"),
+            "plugins": ["OrganizationPlugin"],
+        },
+        # Blog page detail
+        "courses/cms/blogpost_detail.html author": {
+            "name": _("Author"),
+            "plugins": ["PersonPlugin"],
+            "limits": {"PersonPlugin": 1},
+        },
+        "courses/cms/blogpost_detail.html categories": {
+            "name": _("Categories"),
+            "plugins": ["CategoryPlugin"],
+        },
+        "courses/cms/blogpost_detail.html cover": {
+            "name": _("Cover"),
+            "plugins": ["SimplePicturePlugin"],
+            "limits": {"SimplePicturePlugin": 1},
+        },
+        "courses/cms/blogpost_detail.html excerpt": {
+            "name": _("Excerpt"),
+            "plugins": ["PlainTextPlugin"],
+            "limits": {"PlainTextPlugin": 1},
+        },
+        "courses/cms/blogpost_detail.html body": {
+            "name": _("Body"),
+            "excluded_plugins": ["CKEditorPlugin", "GoogleMapPlugin"],
+        },
+    }
+
 
 class Development(Base):
     """
     Development environment settings
-
     We set DEBUG to True and configure the server to respond from all hosts.
     """
 
@@ -343,26 +605,23 @@ class Test(Base):
 class ContinuousIntegration(Test):
     """
     Continous Integration environment settings
-
     nota bene: it should inherit from the Test environment.
     """
 
 
 class Production(Base):
     """Production environment settings
-
     You must define the DJANGO_ALLOWED_HOSTS environment variable in Production
     configuration (and derived configurations):
-
     DJANGO_ALLOWED_HOSTS="foo.com,foo.fr"
     """
 
     # Security
     ALLOWED_HOSTS = values.ListValue(None)
-    CSRF_COOKIE_SECURE = True
+    #CSRF_COOKIE_SECURE = True
     SECURE_BROWSER_XSS_FILTER = True
     SECURE_CONTENT_TYPE_NOSNIFF = True
-    SESSION_COOKIE_SECURE = True
+    #SESSION_COOKIE_SECURE = True
     # System check reference:
     # https://docs.djangoproject.com/en/2.2/ref/checks/#security
     SILENCED_SYSTEM_CHECKS = values.ListValue(
@@ -400,11 +659,10 @@ class Production(Base):
         "Expires": "Thu, 31 Dec 2099 20:00:00 GMT",
         "CacheControl": "max-age=94608000",
     }
-    AWS_S3_REGION_NAME = values.Value("eu-west-1")
-
-    AWS_STATIC_BUCKET_NAME = values.Value("production-funmooc-static")
-    AWS_MEDIA_BUCKET_NAME = values.Value("production-funmooc-media")
-
+    AWS_S3_REGION_NAME = values.Value("us-east-2")
+    AWS_QUERYSTRING_AUTH = False
+    AWS_STATIC_BUCKET_NAME = values.Value("production-edulib-static")
+    AWS_MEDIA_BUCKET_NAME = values.Value("production-edulib-media")
     AWS_CLOUDFRONT_DOMAIN = values.Value()
 
     @property
@@ -425,31 +683,28 @@ class Production(Base):
 class Feature(Production):
     """
     Feature environment settings
-
     nota bene: it should inherit from the Production environment.
     """
 
-    AWS_STATIC_BUCKET_NAME = values.Value("feature-funmooc-static")
-    AWS_MEDIA_BUCKET_NAME = values.Value("feature-funmooc-media")
+    AWS_STATIC_BUCKET_NAME = values.Value("feature-edulib-static")
+    AWS_MEDIA_BUCKET_NAME = values.Value("feature-edulib-media")
 
 
 class Staging(Production):
     """
     Staging environment settings
-
     nota bene: it should inherit from the Production environment.
     """
 
-    AWS_STATIC_BUCKET_NAME = values.Value("staging-funmooc-static")
-    AWS_MEDIA_BUCKET_NAME = values.Value("staging-funmooc-media")
+    AWS_STATIC_BUCKET_NAME = values.Value("staging-edulib-static")
+    AWS_MEDIA_BUCKET_NAME = values.Value("staging-edulib-media")
 
 
 class PreProduction(Production):
     """
     Pre-production environment settings
-
     nota bene: it should inherit from the Production environment.
     """
 
-    AWS_STATIC_BUCKET_NAME = values.Value("preprod-funmooc-static")
-    AWS_MEDIA_BUCKET_NAME = values.Value("preprod-funmooc-media")
+    AWS_STATIC_BUCKET_NAME = values.Value("preprod-edulib-static")
+    AWS_MEDIA_BUCKET_NAME = values.Value("preprod-edulib-media")
