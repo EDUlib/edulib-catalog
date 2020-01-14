@@ -8,11 +8,11 @@
                     {% thumbnail instance.background_image 1900x450 crop=',0' %} 1900w,
                     {% thumbnail instance.background_image 1280x400 crop=',0' %} 1280w,
                     {% thumbnail instance.background_image 768x450 crop=',0' %} 768w"
-            alt="banner"/>
+            alt="banner">
     {% endif %}
     <div class="large-banner__body">
         {% if instance.logo %}
-            <img src="{% thumbnail instance.logo 1280x400 crop='smart' %}" class="large-banner__logo" alt="{{ instance.logo_alt_text }}"/>
+            <img src="{% thumbnail instance.logo 1280x400 crop='smart' %}" class="large-banner__logo" alt="{{ instance.logo_alt_text }}">
         {% endif %}
         {% if instance.content %}
             <div class="large-banner__content">{{ instance.content|safe }}</div>
