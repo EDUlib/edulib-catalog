@@ -416,6 +416,7 @@ class Base(DRFMixin, RichieCoursesConfigurationMixin, Configuration):
                     "LinkPlugin",
                     "OrganizationPlugin",
                     "PersonPlugin",
+                    "VideoPlayerPlugin",
                 ]
             },
         },
