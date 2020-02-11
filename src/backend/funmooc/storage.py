@@ -68,6 +68,6 @@ class MediaStorage(S3Boto3Storage):
     """A S3Boto3Storage backend to serve media files via CloudFront."""
 
     bucket_name = settings.AWS_MEDIA_BUCKET_NAME
-    #custom_domain = settings.AWS_CLOUDFRONT_DOMAIN
+    custom_domain = settings.AWS_CLOUDFRONT_DOMAIN
     file_overwrite = False
     location = settings.MEDIA_URL
