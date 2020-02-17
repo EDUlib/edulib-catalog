@@ -1,5 +1,5 @@
 import debounce from 'lodash-es/debounce';
-import React, { useContext, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import Autosuggest from 'react-autosuggest';
 import { defineMessages, useIntl } from 'react-intl';
 
@@ -9,8 +9,10 @@ import {
   onSuggestionsFetchRequested,
   renderSuggestion,
 } from 'common/searchFields';
-import { CourseSearchParamsContext } from 'data/useCourseSearchParams';
+import { SearchInput } from 'components/SearchInput';
+import { useCourseSearchParams } from 'data/useCourseSearchParams';
 import { useStaticFilters } from 'data/useStaticFilters';
+import { CommonDataProps } from 'types/commonDataProps';
 import {
   SearchAutosuggestProps,
   SearchSuggestionSection,
@@ -27,8 +29,9 @@ const messages = defineMessages({
 
 /**
  * Component. Displays the main search field alon with any suggestions organized in relevant sections.
+ * @param context General contextual app information as defined in common data props.
  */
-export const SearchSuggestField = () => {
+export const SearchSuggestField = ({ context }: CommonDataProps) => {
   const intl = useIntl();
 
   // We need static filter definitions to act as config for our suggestion sections & requests.
@@ -36,9 +39,10 @@ export const SearchSuggestField = () => {
 
   // Setup our filters updates (for full-text-search and specific filters) directly through the
   // search parameters hook.
-  const [courseSearchParams, dispatchCourseSearchParamsUpdate] = useContext(
-    CourseSearchParamsContext,
-  );
+  const [
+    courseSearchParams,
+    dispatchCourseSearchParamsUpdate,
+  ] = useCourseSearchParams();
 
   // Initialize hooks for the two pieces of state the controlled <Autosuggest> component needs to interact with:
   // the current list of suggestions and the input value.
@@ -110,17 +114,19 @@ export const SearchSuggestField = () => {
   ) => {
     const filter = getRelevantFilter(await getFilters(), suggestion);
 
-    // Dispatch the actual update on the relevant filter
-    dispatchCourseSearchParamsUpdate({
-      filter,
-      payload: String(suggestion.id),
-      type: 'FILTER_ADD',
-    });
-    // Clear the current search query as the selected suggestion was generated from the same user input
-    dispatchCourseSearchParamsUpdate({
-      query: '',
-      type: 'QUERY_UPDATE',
-    });
+    // Dispatch the actual update on the relevant filter and clear the current search query as the
+    // selected suggestion was generated from the same user input
+    dispatchCourseSearchParamsUpdate(
+      {
+        query: '',
+        type: 'QUERY_UPDATE',
+      },
+      {
+        filter,
+        payload: String(suggestion.id),
+        type: 'FILTER_ADD',
+      },
+    );
     // Reset the search field state: the task has been completed
     setValue('');
     setSuggestions([]);
@@ -143,6 +149,9 @@ export const SearchSuggestField = () => {
         )
       }
       onSuggestionSelected={onSuggestionSelected}
+      renderInputComponent={passthroughInputProps => (
+        <SearchInput context={context} inputProps={passthroughInputProps} />
+      )}
       renderSectionTitle={section => section.title}
       renderSuggestion={renderSuggestion}
       shouldRenderSuggestions={val => val.length > 2}
