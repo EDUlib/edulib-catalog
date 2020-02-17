@@ -59,13 +59,16 @@ $richie-blogpost-detail-title-textalign: center !default;
         background: $edulib5;
 
         &:hover {
-          color: $edulib5;
-          background: $white;
+          background: $edulib7;
           text-decoration: none;
         }
 
         & + .social-network-badges__item {
           margin-left: 0.5rem;
+        }
+
+        &:hover > .social-network-badges__item__icon {
+          fill: $white;
         }
       }
 

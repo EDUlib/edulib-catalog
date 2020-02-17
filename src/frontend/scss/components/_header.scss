@@ -167,8 +167,8 @@ $richie-topbar-menu-item-divider-border-lg: 1px solid $white !default;
         align-items: center;
         min-height: 3rem;
         margin: $richie-topbar-menu-item-margin;
-        padding: $richie-topbar-menu-item-padding;
         color: $richie-topbar-menu-item-fontcolor;
+        padding-left: 1rem;
 
         @include media-breakpoint-up($richie-topbar-breakpoint) {
           @include sv-flex(0, 0, auto);
@@ -186,7 +186,6 @@ $richie-topbar-menu-item-divider-border-lg: 1px solid $white !default;
           @include sv-flex(1, 0, 100%);
           display: block;
           flex-direction: row;
-          padding: $richie-topbar-menu-link-padding;
           font-size: $richie-topbar-menu-link-fontsize;
           color: $richie-topbar-menu-link-fontcolor;
 
