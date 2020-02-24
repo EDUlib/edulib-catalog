@@ -12,12 +12,12 @@
     flex-direction: column;
     justify-content: center;
     color: $white;
-    background: $firebrick6;
+    background: $edulib5;
     border-radius: 100%;
     text-align: center;
 
     &:hover {
-      color: $firebrick6;
+      color: $edulib5;
       background: $white;
       text-decoration: none;
     }
@@ -30,7 +30,7 @@
       fill: white;
 
       .social-network-badges__item:hover > & {
-        fill: $firebrick6;
+        fill: $edulib5;
       }
     }
   }
