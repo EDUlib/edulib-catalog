@@ -480,10 +480,6 @@ class Base(DRFMixin, RichieCoursesConfigurationMixin, Configuration):
             "name": _("Team"),
             "plugins": ["PersonPlugin"],
         },
-        "courses/cms/course_detail.html course_plan": {
-            "name": _("Plan"),
-            "plugins": ["CKEditorPlugin"],
-        },
         "courses/cms/course_detail.html course_information": {
             "name": _("Complementary information"),
             "plugins": ["SectionPlugin"],
@@ -554,8 +550,8 @@ class Base(DRFMixin, RichieCoursesConfigurationMixin, Configuration):
         },
         "courses/cms/person_detail.html bio": {
             "name": _("Bio"),
-            "plugins": ["PlainTextPlugin"],
-            "limits": {"PlainTextPlugin": 1},
+            "plugins": ["CKEditorPlugin"],
+            "limits": {"CKEditorPlugin": 1},
         },
         "courses/cms/person_detail.html organizations": {
             "name": _("Organizations"),
