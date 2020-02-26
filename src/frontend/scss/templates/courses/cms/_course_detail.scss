@@ -422,6 +422,10 @@ $richie-course-detail-aside-main-org-background: $white !default;
           text-align: center;
         }
 
+        &__empty {
+          text-align: center;
+        }
+
         $block-selector: &;
 
         position: relative;
