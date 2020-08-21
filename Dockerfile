@@ -68,6 +68,9 @@ COPY ./docker/files/usr/local/bin/entrypoint /usr/local/bin/entrypoint
 # Copy distributed application's statics
 COPY --from=front-builder /builder/src/backend/base/static/richie /app/base/static/richie
 
+# Copy custom translations into image
+COPY ./sites/${SITE}/src/backend/locale /usr/local/lib/python3.7/site-packages/richie/locale
+
 WORKDIR /app
 
 # Make sure .mo files are up-to-date
