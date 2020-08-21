@@ -1,0 +1,207 @@
+{% extends "richie/fullwidth.html" %}
+{% load cms_tags i18n extra_tags menu_tags static %}
+
+{% block head_title %}{% spaceless %}
+    {% page_attribute "page_title" as course_run_title %}
+    {% page_attribute "page_title" current_page.parent_page as course_title %}
+    {{ course_run_title|capfirst }} - {{ course_title|capfirst }}
+{% endspaceless %}{% endblock head_title %}
+
+{# Make sure the course run pages are not indexed by search engines #}
+{% block meta_index_rules %}<meta name="robots" content="noindex">{% endblock meta_index_rules %}
+
+
+{% block meta_opengraph_contextuals %}
+    {% page_attribute "page_title" as course_run_title %}
+    {% page_attribute "page_title" current_page.parent_page as course_title %}
+    <meta property="og:title" content="{{ course_run_title|capfirst }} - {{ course_title|capfirst|truncatechars:53 }}">
+    <meta property="og:url" content="{{ SITE.web_url }}{{ current_page.get_absolute_url }}">
+{% endblock meta_opengraph_contextuals %}
+
+{% block subheader %}
+<div class="subheader subheader--alternative">
+    {% block breadcrumbs %}
+        {% block breadcrumbs_content %}
+        {% show_breadcrumb 0 "courses/cms/fragment_course_run_breadcrumb.html" %}
+        {% endblock breadcrumbs_content %}
+    {% endblock breadcrumbs %}
+
+    {% block subheader_content %}{% spaceless %}
+        {% comment %}{% with course=current_page.parent_page course_run=current_page.course header_level=2 %}{% endcomment %}
+        {% with course=current_page.course course_run=current_page.courserun header_level=2 %}
+        <div class="subheader__container">
+            <div class="subheader__intro">
+                <div class="subheader__main">
+                    {% block categories %}
+                    <div class="category-badge-list">
+                        <div class="category-badge-list__container">
+                        {% with category_variant="badge" %}
+                            {% show_placeholder "course_icons" current_page.parent_page %}
+                            {% show_placeholder "course_categories" current_page.parent_page %}
+                        {% endwith %}
+                        </div>
+                    </div>
+                    {% endblock categories %}
+
+                    {% block title %}
+                    <h1 class="subheader__title">
+                        {% if request.current_page.parent_page.parent_page.course %}
+                            {{ current_page.parent_page.parent_page.get_title }}
+                        {% else %}
+                            {{ current_page.parent_page.get_title }}
+                        {% endif %}
+                        <br />
+                        {% render_model request.current_page "title" %}
+                    </h1>
+                    {% endblock title %}
+
+                    <div class="subheader__teaser">
+                        {% show_placeholder "course_teaser" current_page.parent_page %}
+                    </div>
+
+                    <div class="subheader__content subheader__content--aside">
+                        {% if current_page.parent_page.publisher_is_draft or not current_page.parent_page|is_empty_placeholder:"course_description" %}
+                            {% with header_level=3 %}
+                            {% show_placeholder "course_description" current_page.parent_page %}
+                            {% endwith %}
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="subheader__aside">
+                    <ul class="subheader__definitions">
+                        <li>
+                            <strong>{% trans "Enrollment starts" %}</strong>
+                            <span>{% render_model course_run "enrollment_start" "enrollment_start,enrollment_end" "" "date:'DATE_FORMAT'|default:'...'" %}</span>
+                        </li>
+                        <li>
+                            <strong>{% trans "Enrollment ends" %}</strong>
+                            <span>{% render_model course_run "enrollment_end" "enrollment_start,enrollment_end" "" "date:'DATE_FORMAT'|default:'...'" %}</span>
+                        </li>
+                        <li>
+                            <strong>{% trans "Course starts" %}</strong>
+                            <span>{% render_model course_run "start" "start,end" "" "date:'DATE_FORMAT'|default:'...'" %}</span>
+                        </li>
+                        <li>
+                            <strong>{% trans "Course ends" %}</strong>
+                            <span>{% render_model course_run "end" "start,end" "" "date:'DATE_FORMAT'|default:'...'" %}</span>
+                        </li>
+                        <li>
+                            <strong>{% trans "Languages" %}</strong>
+                            <span>{% render_model course_run "get_languages_display" "languages" %}</span>
+                        </li>
+                        <li class="full">
+                            {% if course_run.state.call_to_action %}
+                            <a class="subheader__cta" href="{{ course_run.resource_link }}">
+                                {{ course_run.state.call_to_action|capfirst }}
+                            </a>
+                            {% else %}
+                            <button class="subheader__cta subheader__cta--projected">
+                                {{ course_run.state.text|capfirst }}
+                            </button>
+                            {% endif %}
+                        </li>
+                        {% if current_page.publisher_is_draft %}
+                        <li class="full">
+                            <strong>{% trans "Resource link" %}</strong>
+                            <span>
+                                <a href="{{ course_run.resource_link }}">
+                                    {% render_model course_run "resource_link" "resource_link" "" "default:'...'" %}
+                                </a>
+                            </span>
+                        </li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+        {% endwith %}
+    {% endspaceless %}{% endblock subheader_content %}
+</div>
+{% endblock subheader %}
+
+
+{% block content %}{% spaceless %}
+{% with course_run=current_page.courserun header_level=2 %}
+<div class="course-detail">
+    <div class="course-detail__grid">
+        <div class="course-detail__wrapper">
+            <div class="course-detail__block course-detail__primary-group">
+                {% block skills %}
+                {% endblock skills %}
+
+                {% block format %}
+                {% endblock format %}
+
+                {% block prerequisites %}
+                {% endblock prerequisites %}
+
+                {% block assessment %}
+                {% endblock assessment %}
+
+                {% block information %}
+                    {% if not current_page.parent_page|is_empty_placeholder:"course_information" %}
+                    <div class="course-detail__row course-detail__information">
+                        {% show_placeholder "course_information" current_page.parent_page %}
+                    </div>
+                    {% endif %}
+                {% endblock information %}
+            </div>
+
+            {% block plan %}
+                <div class="course-detail__block course-detail__secondary-group">
+                    {% if not current_page.parent_page|is_empty_placeholder:"course_plan" %}
+                    <section class="course-detail__row course-detail__plan">
+                        <h2 class="course-detail__title">{% trans 'Course plan' %}</h2>
+
+                        <div class="plan-accordion">
+                            {% show_placeholder "course_plan" current_page.parent_page %}
+                        </div>
+                    </section>
+                    {% endif %}
+                </div>
+            {% endblock plan %}
+        </div>
+    </div>
+
+    {% block fragment_relations %}
+    <div class="course-detail__relations">
+        {% block team %}
+            {% if not current_page.parent_page|is_empty_placeholder:"course_team" %}
+            <div class="course-detail__team course-detail__block course-detail__block--lightest">
+                <section class="section course-detail__row course-detail__team">
+                    <h2 class="course-detail__title">
+                        {% trans 'Course team' %}
+                    </h2>
+                    {% with header_level=3 %}
+                        <div class="section__items section__items--team">
+                            {% show_placeholder "course_team" current_page.parent_page %}
+                        </div>
+                    {% endwith %}
+                </section>
+            </div>
+            {% endif %}
+        {% endblock team %}
+
+        {% block organizations %}
+            {% if not current_page.parent_page|is_empty_placeholder:"course_organizations" %}
+            <div class="course-detail__organizations course-detail__block">
+                <section class="section course-detail__row course-detail__organizations">
+                    <h2 class="course-detail__title">
+                        {% trans 'Organizations' %}
+                    </h2>
+                    <div class="section__items section__items--organizations">
+                        {% show_placeholder "course_organizations" current_page.parent_page %}
+                    </div>
+                </section>
+            </div>
+            {% endif %}
+        {% endblock organizations %}
+
+        {% block licenses %}
+        {% endblock licenses %}
+    </div>
+    {% endblock fragment_relations %}
+</div>
+{% endwith %}
+{% endspaceless %}{% endblock content %}
