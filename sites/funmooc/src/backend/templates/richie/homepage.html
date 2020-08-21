@@ -1,0 +1,31 @@
+{% extends "richie/base.html" %}
+{% load cms_tags %}
+
+{% block breadcrumbs %}{% endblock breadcrumbs %}
+
+{% block meta_opengraph_contextuals %}
+    {% page_attribute "page_title" as page_title %}
+    <meta property="og:title" content="{{ page_title|truncatechars:65 }}">
+    <meta property="og:url" content="{{ SITE.web_url }}">
+{% endblock meta_opengraph_contextuals %}
+
+{% block head_title %}
+    {% page_attribute "page_title" %}
+{% endblock head_title %}
+
+{% block topbar_classes %}topbar{% endblock topbar_classes %}
+
+{% comment %}Disable search field in topbar since it is in the homepage banner{% endcomment %}
+{% block topbar_searchbar %}
+    <div class="topbar__search richie-react richie-react--root-search-suggest-field"
+        data-props='{"courseSearchPageUrl": "{% page_url 'courses' %}"}'></div>
+{% endblock topbar_searchbar %}
+
+{% comment %}Disable subheader base HTML since it is not required on homepage{% endcomment %}
+{% block subheader %}{% endblock subheader %}
+
+{% block content %}
+<div class="homepage{% if current_page.publisher_is_draft %} homepage--draft{% endif %}">
+    {% placeholder "maincontent" %}
+</div>
+{% endblock content %}
