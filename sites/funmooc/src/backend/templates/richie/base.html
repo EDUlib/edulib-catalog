@@ -1,22 +1,198 @@
-{% extends "richie/base.html" %}
-{% load static i18n %}
+{% load i18n cms_tags menu_tags rfc_5646_locale static sekizai_tags %}
+<!doctype html>
+<html lang="{{ LANGUAGE_CODE|rfc_5646_locale }}">
+    <head>
+        {% spaceless %}
+        <title>{% block head_title %}{{ SITE.name }}{% endblock head_title %}</title>
+        <meta name="viewport" content="width=device-width,initial-scale=1">
+        {% block meta %}
+            {% block meta_index_rules %}
+                <meta name="robots" content="index,follow,all">
+            {% endblock meta_index_rules %}
 
-{% block meta_favicons %}
-<link rel="apple-touch-icon" sizes="180x180" href="{% static 'richie/favicon/apple-touch-icon.png' %}">
-<link rel="icon" type="image/png" sizes="32x32" href="{% static 'richie/favicon/favicon-32x32.png' %}">
-<link rel="icon" type="image/png" sizes="16x16" href="{% static 'richie/favicon/favicon-16x16.png' %}">
-<link rel="manifest" href="{% static 'richie/favicon/site.webmanifest' %}">
-<link rel="mask-icon" href="{% static 'richie/favicon/safari-pinned-tab.svg' %}" color="#5bbad5">
-<link rel="shortcut icon" href="{% static 'richie/favicon/favicon.ico' %}">
-<meta name="msapplication-TileColor" content="#ffffff">
-<meta name="msapplication-config" content="{% static 'richie/favicon/browserconfig.xml' %}">
-<meta name="theme-color" content="#ffffff">
-{% endblock meta_favicons %}
+            {% block meta_favicons %}
+            <link rel="apple-touch-icon" sizes="120x120" href="{% static 'richie/favicon/apple-touch-icon.png' %}">
+            <link rel="icon" type="image/png" sizes="32x32" href="{% static 'richie/favicon/favicon-32x32.png' %}">
+            <link rel="icon" type="image/png" sizes="16x16" href="{% static 'richie/favicon/favicon-16x16.png' %}">
+            <link rel="manifest" href="{% static 'richie/favicon/site.webmanifest' %}">
+            <link rel="mask-icon" href="{% static 'richie/favicon/safari-pinned-tab.svg' %}" color="#f72c30">
+            <link rel="shortcut icon" href="{% static 'richie/favicon/favicon.ico' %}">
+            <meta name="msapplication-TileColor" content="#eceff1">
+            <meta name="msapplication-config" content="{% static 'richie/favicon/browserconfig.xml' %}">
+            <meta name="theme-color" content="#ffffff">
+            {% endblock meta_favicons %}
 
-{% block topbar_contact %}
-<li class="topbar__item topbar__item--cta">
-    <a href="https://www.fun-mooc.help">{% trans "Help" %}</a>
-</li>
-{% endblock topbar_contact %}
+            {% block meta_html %}
+                {% page_attribute "meta_description" as meta_description %}
+                {% if meta_description and meta_description != "None" %}<meta name="description" content="{% block meta-description %}{{ meta_description }}{% endblock %}">{% endif %}
+            {% endblock meta_html %}
 
-{% block body_footer_title %}{% endblock body_footer_title %}
+            {% block meta_opengraph %}
+                {% block meta_opengraph_locale %}
+                    <meta property="og:locale" content="{{ LANGUAGE_CODE }}">
+                {% endblock meta_opengraph_locale %}
+                {% block meta_opengraph_type %}
+                    <meta property="og:type" content="website">
+                {% endblock meta_opengraph_type %}
+                {% block meta_opengraph_sitename %}
+                    <meta property="og:site_name" content="{{ SITE.name }}">
+                {% endblock meta_opengraph_sitename %}
+                {% comment %}Since we are not able yet to get relevant image contextually for each content kind, we
+                keep the logo as the ressource image for all{% endcomment %}
+                {% block meta_opengraph_image %}
+                    <meta property="og:image" content="{{ SITE.web_url }}{% static "richie/images/logo.png" %}">
+                {% endblock meta_opengraph_image %}
+                {% block meta_opengraph_contextuals %}
+                    <meta property="og:title" content="{{ SITE.name }}">
+                    <meta property="og:url" content="{{ SITE.web_url }}">
+                {% endblock meta_opengraph_contextuals %}
+            {% endblock meta_opengraph %}
+        {% endblock meta %}
+        {% endspaceless %}
+
+        {% render_block "css" %}
+
+        {% block css_links %}
+        <link rel="stylesheet" type="text/css" href="{% static 'richie/css/main.css' %}">
+        {% endblock css_links %}
+    </head>
+    <body>
+        {% include "richie/icons.html" %}
+        {% cms_toolbar %}
+
+        {# Wrap all body content in an ID'd element to easily remove it from view (using aria-hidden) #}
+        {# when a modal is open. This is important for accessibility. #}
+        <div id="modal-exclude">
+            {% block body_header %}
+            <nav class="topbar {% block topbar_classes %}{% endblock topbar_classes %}" id="main-menu">
+                <div class="topbar__container">
+                    <div class="topbar__brand">
+                        <button class="topbar__hamburger"
+                                data-target="main-menu" aria-label="menu" aria-expanded="false">&#8801;</button>
+                        <a href="/">
+                            <img src="{% static "richie/images/logo.png" %}" class="topbar__logo" alt="{{ SITE.name }}">
+                        </a>
+                    </div>
+                    <div class="topbar__menu">
+                        <ul class="topbar__list">
+                            {% show_menu 0 100 0 0 "menu/header_menu.html" %}
+                        </ul>
+                    </div>
+                    <div class="topbar__menu topbar__menu--aside">
+                        {% block topbar_searchbar %}
+                        <div class="topbar__search richie-react richie-react--root-search-suggest-field"
+                            data-props='{"courseSearchPageUrl": "{% page_url 'courses' %}"}'></div>
+                        {% endblock topbar_searchbar %}
+
+                        <ul class="topbar__list topbar__list--controls">
+                            {% block userlogin %}
+                            <li class="topbar__item topbar__item--hollow">
+                                <a href="https://cours.edulib.org/register">{% trans "Sign up" %}</a>
+                            </li>
+                            <li class="topbar__item topbar__item--cta">
+                                <a href="https://cours.edulib.org/login">{% trans "Login" %}</a>
+                            </li>
+                            {% endblock userlogin %}
+                            {% block topbar_contact %}
+                            {% endblock topbar_contact %}
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+            {% endblock body_header %}
+
+            <div class="body-content">
+                {% block subheader %}
+                <div class="subheader">
+                    {% block breadcrumbs %}
+                    {% include "menu/breadcrumbs.html" %}
+                    {% endblock breadcrumbs %}
+                    {% block subheader_content %}{% endblock subheader_content %}
+                </div>
+                {% endblock subheader %}
+
+                {% block content %}{% endblock content %}
+            </div>
+
+            {% block body_footer %}
+            <div class="body-footer">
+                <div class="body-footer__container">
+                    <div class="body-footer__menu">
+                        {% static_placeholder "footer" %}
+                    </div>
+                    <div class="body-footer__brand">
+                        <a href="/">
+                            <img src="{% static "richie/images/logo-alt.png" %}" alt="">
+                        </a>
+                    </div>
+                    <div class="body-footer__insert">
+                        {% block body_footer_title %}{% endblock body_footer_title %}
+                        {% language_chooser "menu/language_menu.html" %}
+                        <div class="body-footer__badges">
+                            {% include "social-networks/footer-badges.html" %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="body-mentions">
+                <div class="body-mentions__container">
+                    <div class="body-mentions__copyright">
+                        <p>{% now "Y" %} &copy; EDUlib {% trans "All Rights Reserved." %}</p>
+                    </div>
+                    <div class="body-mentions__poweredby">
+                        <p>
+                            <small>{% trans "Powered by" %}</small>
+                            <a class="body-footer__poweredby__link" href="https://github.com/openfun/richie"><strong>Richie</strong></a>
+                            &
+                            <a class="body-footer__poweredby__link" href="https://open.edx.org/"><strong>open edX</strong></a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            {% endblock body_footer %}
+        </div>
+
+        {% render_block "js" %}
+        <script>
+            window.__richie_frontend_context__ = JSON.parse('{{ FRONTEND_CONTEXT|safe }}');
+        </script>
+        <script src="{% static 'richie/js/index.js' %}"></script>
+        <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // Get all topbar burger elements
+            const topbarBurgers = Array.prototype.slice.call(
+                document.querySelectorAll(".topbar__hamburger"), 0
+            );
+
+            // Check if there are any navbar burgers
+            if (topbarBurgers.length > 0) {
+                // Add a click event on each of them
+                topbarBurgers.forEach(function(el) {
+                    el.addEventListener("click", function() {
+                        // Get the target from the "data-target" attribute
+                        const target = document.getElementById(el.dataset.target);
+                        // Toggle the "is-active" class on both the burger and container
+                        el.classList.toggle("is-active");
+                        target.classList.toggle("is-open");
+                    });
+                });
+            }
+
+            // Implement accordion item behaviors
+            const $accordionItems = Array.prototype.slice.call(
+                document.querySelectorAll('[data-accordion-button]'), 0
+            );
+
+            if ($accordionItems.length > 0) {
+                $accordionItems.forEach(function(itemObject, itemIndex) {
+                    itemObject.addEventListener('click', () => {
+                        itemObject.closest('li').toggleAttribute('data-accordion-active');
+                        itemObject.toggleAttribute('data-accordion-open');
+                    });
+                });
+            }
+        });
+        </script>
+        {% block body_js %}{% endblock body_js %}
+    </body>
+</html>
