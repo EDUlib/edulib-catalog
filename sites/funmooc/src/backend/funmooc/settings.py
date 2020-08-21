@@ -352,6 +352,329 @@ class Base(StyleguideMixin, DRFMixin, RichieCoursesConfigurationMixin, Configura
         "django.contrib.messages",
     )
 
+    CMS_PLACEHOLDER_CONF = {
+        # -- Static Placeholders
+        # Footer
+        "footer": {
+            "name": _("Footer"),
+            "plugins": ["NestedItemPlugin"],
+            "NestedItemPlugin": ["NestedItemPlugin", "LinkPlugin"],
+        },
+        "static_blogpost_headline": {
+            "name": _("Static headline"),
+            "plugins": ["SectionPlugin", "CKEditorPlugin"],
+            "child_classes": {"SectionPlugin": ["CKEditorPlugin"]},
+        },
+        # -- Page Placeholders
+        # Homepage
+        "richie/homepage.html maincontent": {
+            "name": _("Main content"),
+            "plugins": ["LargeBannerPlugin", "SectionPlugin"],
+            "child_classes": {
+                "SectionPlugin": [
+                    "BlogPostPlugin",
+                    "CoursePlugin",
+                    "CategoryPlugin",
+                    "LinkPlugin",
+                    "OrganizationPlugin",
+                    "OrganizationsByCategoryPlugin",
+                    "PersonPlugin",
+                    "CKEditorPlugin",
+                    "SectionPlugin",
+                    "NestedItemPlugin",
+                    "GlimpsePlugin",
+                ],
+                "NestedItemPlugin": ["CategoryPlugin"],
+            },
+        },
+        # Single column page
+        "richie/single_column.html maincontent": {
+            "name": _("Main content"),
+            "excluded_plugins": ["CKEditorPlugin", "GoogleMapPlugin"],
+            "parent_classes": {
+                "BlogPostPlugin": ["SectionPlugin"],
+                "CategoryPlugin": ["SectionPlugin"],
+                "CoursePlugin": ["SectionPlugin"],
+                "GlimpsePlugin": ["SectionPlugin"],
+                "OrganizationPlugin": ["SectionPlugin"],
+                "OrganizationsByCategoryPlugin": ["SectionPlugin"],
+                "PersonPlugin": ["SectionPlugin"],
+            },
+            "child_classes": {
+                "SectionPlugin": [
+                    "BlogPostPlugin",
+                    "CategoryPlugin",
+                    "CoursePlugin",
+                    "GlimpsePlugin",
+                    "LinkPlugin",
+                    "OrganizationPlugin",
+                    "OrganizationsByCategoryPlugin",
+                    "PersonPlugin",
+                    "NestedItemPlugin",
+                ],
+                "NestedItemPlugin": ["NestedItemPlugin", "LinkPlugin"],
+            },
+        },
+        # Course detail
+        "courses/cms/course_detail.html course_cover": {
+            "name": _("Cover"),
+            "plugins": ["SimplePicturePlugin"],
+            "limits": {"SimplePicturePlugin": 1},
+        },
+        "courses/cms/course_detail.html course_introduction": {
+            "name": _("Catch phrase"),
+            "plugins": ["PlainTextPlugin"],
+            "limits": {"PlainTextPlugin": 1},
+        },
+        "courses/cms/course_detail.html course_teaser": {
+            "name": _("Teaser"),
+            "plugins": ["VideoPlayerPlugin", "SimplePicturePlugin"],
+            "limits": {"VideoPlayerPlugin": 1, "SimplePicturePlugin": 1},
+        },
+        "courses/cms/course_detail.html course_description": {
+            "name": _("About the course"),
+            "plugins": ["CKEditorPlugin", "NestedItemPlugin", "SimplePicturePlugin"],
+        },
+        "courses/cms/course_detail.html course_skills": {
+            "name": _("What you will learn"),
+            "plugins": ["CKEditorPlugin"],
+        },
+        "courses/cms/course_detail.html course_format": {
+            "name": _("Format"),
+            "plugins": ["CKEditorPlugin"],
+        },
+        "courses/cms/course_detail.html course_prerequisites": {
+            "name": _("Prerequisites"),
+            "plugins": ["CKEditorPlugin"],
+        },
+        "courses/cms/course_detail.html course_team": {
+            "name": _("Team"),
+            "plugins": ["PersonPlugin"],
+        },
+        "courses/cms/course_detail.html course_plan": {
+            "name": _("Plan"),
+            "plugins": ["NestedItemPlugin"],
+            "child_classes": {"NestedItemPlugin": ["NestedItemPlugin"]},
+        },
+        "courses/cms/course_detail.html course_information": {
+            "name": _("Complementary information"),
+            "plugins": ["SectionPlugin"],
+            "parent_classes": {
+                "CKEditorPlugin": ["SectionPlugin"],
+                "SimplePicturePlugin": ["SectionPlugin"],
+                "GlimpsePlugin": ["SectionPlugin"],
+            },
+            "child_classes": {
+                "SectionPlugin": ["CKEditorPlugin", "SimplePicturePlugin", "GlimpsePlugin"]
+            },
+        },
+        "courses/cms/course_detail.html course_license_content": {
+            "name": _("License for the course content"),
+            "plugins": ["LicencePlugin"],
+            "limits": {"LicencePlugin": 1},
+        },
+        "courses/cms/course_detail.html course_license_participation": {
+            "name": _("License for the content created by course participants"),
+            "plugins": ["LicencePlugin"],
+            "limits": {"LicencePlugin": 1},
+        },
+        "courses/cms/course_detail.html course_categories": {
+            "name": _("Categories"),
+            "plugins": ["CategoryPlugin"],
+        },
+        "courses/cms/course_detail.html course_icons": {
+            "name": _("Icon"),
+            "plugins": ["CategoryPlugin"],
+            "limits": {"CategoryPlugin": 1},
+        },
+        "courses/cms/course_detail.html course_organizations": {
+            "name": _("Organizations"),
+            "plugins": ["OrganizationPlugin"],
+        },
+        "courses/cms/course_detail.html course_assessment": {
+            "name": _("Assessment and Certification"),
+            "plugins": ["CKEditorPlugin"],
+        },
+        # Organization detail
+        "courses/cms/organization_detail.html banner": {
+            "name": _("Banner"),
+            "plugins": ["SimplePicturePlugin"],
+            "limits": {"SimplePicturePlugin": 1},
+        },
+        "courses/cms/organization_detail.html logo": {
+            "name": _("Logo"),
+            "plugins": ["SimplePicturePlugin"],
+            "limits": {"SimplePicturePlugin": 1},
+        },
+        "courses/cms/organization_detail.html categories": {
+            "name": _("Categories"),
+            "plugins": ["CategoryPlugin"],
+        },
+        "courses/cms/organization_detail.html description": {
+            "name": _("Description"),
+            "plugins": ["CKEditorPlugin"],
+            "limits": {"CKEditorPlugin": 1},
+        },
+        # Category detail
+        "courses/cms/category_detail.html banner": {
+            "name": _("Banner"),
+            "plugins": ["SimplePicturePlugin"],
+            "limits": {"SimplePicturePlugin": 1},
+        },
+        "courses/cms/category_detail.html logo": {
+            "name": _("Logo"),
+            "plugins": ["SimplePicturePlugin"],
+            "limits": {"SimplePicturePlugin": 1},
+        },
+        "courses/cms/category_detail.html icon": {
+            "name": _("Icon"),
+            "plugins": ["SimplePicturePlugin"],
+            "limits": {"SimplePicturePlugin": 1},
+        },
+        "courses/cms/category_detail.html description": {
+            "name": _("Description"),
+            "plugins": ["CKEditorPlugin"],
+            "limits": {"CKEditorPlugin": 1},
+        },
+        # Person detail
+        "courses/cms/person_detail.html categories": {
+            "name": _("Categories"),
+            "plugins": ["CategoryPlugin"],
+        },
+        "courses/cms/person_detail.html portrait": {
+            "name": _("Portrait"),
+            "plugins": ["SimplePicturePlugin"],
+            "limits": {"SimplePicturePlugin": 1},
+        },
+        "courses/cms/person_detail.html bio": {
+            "name": _("Bio"),
+            "plugins": ["CKEditorPlugin"],
+            "limits": {"CKEditorPlugin": 1},
+        },
+        "courses/cms/person_detail.html organizations": {
+            "name": _("Organizations"),
+            "plugins": ["OrganizationPlugin"],
+        },
+        # Blog page detail
+        "courses/cms/blogpost_detail.html author": {
+            "name": _("Author"),
+            "plugins": ["PersonPlugin"],
+            "limits": {"PersonPlugin": 1},
+        },
+        "courses/cms/blogpost_detail.html categories": {
+            "name": _("Categories"),
+            "plugins": ["CategoryPlugin"],
+        },
+        "courses/cms/blogpost_detail.html cover": {
+            "name": _("Cover"),
+            "plugins": ["SimplePicturePlugin"],
+            "limits": {"SimplePicturePlugin": 1},
+        },
+        "courses/cms/blogpost_detail.html excerpt": {
+            "name": _("Excerpt"),
+            "plugins": ["PlainTextPlugin"],
+            "limits": {"PlainTextPlugin": 1},
+        },
+        "courses/cms/blogpost_detail.html body": {
+            "name": _("Body"),
+            "excluded_plugins": ["CKEditorPlugin", "GoogleMapPlugin"],
+        },
+        "courses/cms/blogpost_detail.html headline": {
+            "name": _("Headline"),
+            "plugins": ["SectionPlugin", "CKEditorPlugin"],
+            "child_classes": {"SectionPlugin": ["CKEditorPlugin"]},
+        },
+        # Program page detail
+        "courses/cms/program_detail.html program_cover": {
+            "name": _("Cover"),
+            "plugins": ["SimplePicturePlugin"],
+            "limits": {"SimplePicturePlugin": 1},
+        },
+        "courses/cms/program_detail.html program_excerpt": {
+            "name": _("Excerpt"),
+            "plugins": ["PlainTextPlugin"],
+            "limits": {"PlainTextPlugin": 1},
+        },
+        "courses/cms/program_detail.html program_body": {
+            "name": _("Body"),
+            "excluded_plugins": ["CKEditorPlugin", "GoogleMapPlugin"],
+        },
+        "courses/cms/program_detail.html program_courses": {
+            "name": _("Courses"),
+            "plugins": ["CoursePlugin"],
+        },
+    }
+
+    RICHIE_FILTERS_CONFIGURATION = [
+    (
+        "richie.apps.search.filter_definitions.NestingWrapper",
+        {
+            "name": "course_runs",
+            "filters": [
+                (
+                    "richie.apps.search.filter_definitions.AvailabilityFilterDefinition",
+                    {
+                        "human_name": _("Availability"),
+                        "is_drilldown": True,
+                        "min_doc_count": 0,
+                        "name": "availability",
+                        "position": 1,
+                    },
+                ),
+                (
+                    "richie.apps.search.filter_definitions.LanguagesFilterDefinition",
+                    {
+                        "human_name": _("Languages"),
+                        # There are too many available languages to show them all, all the time.
+                        # Eg. 200 languages, 190+ of which will have 0 matching courses.
+                        "min_doc_count": 1,
+                        "name": "languages",
+                        "position": 5,
+                        "sorting": "count",
+                    },
+                ),
+            ],
+        },
+    ),
+    (
+        "richie.apps.search.filter_definitions.IndexableMPTTFilterDefinition",
+        {
+            "human_name": _("Subjects"),
+            "is_autocompletable": True,
+            "is_searchable": True,
+            "min_doc_count": 0,
+            "name": "subjects",
+            "position": 2,
+            "reverse_id": "subjects",
+            "term": "categories",
+        },
+    ),
+    (
+        "richie.apps.search.filter_definitions.IndexableMPTTFilterDefinition",
+        {
+            "human_name": _("Organizations"),
+            "is_autocompletable": True,
+            "is_searchable": True,
+            "min_doc_count": 0,
+            "name": "organizations",
+            "position": 4,
+            "reverse_id": "organizations",
+        },
+    ),
+    (
+        "richie.apps.search.filter_definitions.IndexableFilterDefinition",
+        {
+            "human_name": _("Persons"),
+            "is_autocompletable": True,
+            "is_searchable": True,
+            "min_doc_count": 0,
+            "name": "persons",
+            "position": 5,
+            "reverse_id": "persons",
+        },
+    ),
+]
+
     # Languages
     # - Django
     LANGUAGE_CODE = "fr"
