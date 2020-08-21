@@ -85,7 +85,7 @@ services:
         SITE: ${RICHIE_SITE:-funmooc}
     image: "${RICHIE_SITE:-funmooc}-nginx:production"
     ports:
-      - "8081:8081"
+      - "80:8081"
     volumes:
       - ./docker/files/etc/nginx/conf.d:/etc/nginx/conf.d:ro
       - ./data/media/${RICHIE_SITE:-funmooc}:/data/media:ro
@@ -101,43 +101,3 @@ services:
     user: "${DOCKER_USER:-1000}"
     volumes:
       - ./sites/${RICHIE_SITE:-funmooc}:/app
-
-  terraform-state:
-    image: hashicorp/terraform:latest
-    env_file: env.d/aws
-    user: "${DOCKER_USER:-1000}"
-    working_dir: /app
-    volumes:
-      - ./aws/create_state_bucket:/app
-    user: ${DOCKER_USER:-1000}
-
-  terraform:
-    image: hashicorp/terraform:0.12.29
-    environment:
-      - TF_VAR_SITE=${RICHIE_SITE:-funmooc}
-      - TF_DATA_DIR=/config
-    env_file: env.d/aws
-    user: "${DOCKER_USER:-1000}"
-    working_dir: /app
-    volumes:
-      - ./aws:/app
-      - ./sites/${RICHIE_SITE:-funmooc}/aws:/config
-    user: ${DOCKER_USER:-1000}
-
-  redis-sentinel:
-    image: docker.io/bitnami/redis-sentinel:6.0-debian-10
-    environment:
-      - REDIS_MASTER_HOST=redis-primary
-    depends_on:
-      - redis-primary
-
-  redis-primary:
-    image: docker.io/bitnami/redis:6.0-debian-10
-    environment:
-      - ALLOW_EMPTY_PASSWORD=yes
-      - REDIS_REPLICATION_MODE=master
-
-networks:
-  lms_outside:
-    driver: bridge
-    name: "${RICHIE_LMS_NETWORK:-edx_outside}"
