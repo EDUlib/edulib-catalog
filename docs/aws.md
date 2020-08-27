@@ -81,6 +81,10 @@ project using the shared state:
 ```
 $ bin/terraform init
 ```
+If not functional, use reconfigure option.
+```
+$ bin/terraform init -reconfigure
+```
 
 Now that your terraform project is initialized, you will be able to create S3
 buckets for static and media files in various environments (see the [project's
