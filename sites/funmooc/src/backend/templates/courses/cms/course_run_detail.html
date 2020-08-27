@@ -146,20 +146,17 @@
                     </div>
                     {% endif %}
                 {% endblock information %}
+
+                {% block more_information %}
+                    {% if not current_page.parent_page|is_empty_placeholder:"course_more_information" %}
+                    <div class="course-detail__row course-detail__information">
+                        {% show_placeholder "course_more_information" current_page.parent_page %}
+                    </div>
+                    {% endif %}
+                {% endblock more_information %}
             </div>
 
             {% block plan %}
-                <div class="course-detail__block course-detail__secondary-group">
-                    {% if not current_page.parent_page|is_empty_placeholder:"course_plan" %}
-                    <section class="course-detail__row course-detail__plan">
-                        <h2 class="course-detail__title">{% trans 'Course plan' %}</h2>
-
-                        <div class="plan-accordion">
-                            {% show_placeholder "course_plan" current_page.parent_page %}
-                        </div>
-                    </section>
-                    {% endif %}
-                </div>
             {% endblock plan %}
         </div>
     </div>
