@@ -198,6 +198,14 @@
                         {% endif %}
                     {% endblock description %}
 
+                    {% block information %}
+                        {% if current_page.publisher_is_draft or not current_page|is_empty_placeholder:"course_information" %}
+                            <div class="course-detail__row course-detail__information">
+                                {% placeholder "course_information" %}
+                            </div>
+                        {% endif %}
+                    {% endblock information %}
+
                     {% block format %}
                     {% endblock format %}
 
@@ -209,18 +217,8 @@
                 </div>
 
                 {% block plan %}
-                    <div class="course-detail__block course-detail__secondary-group">
-                        {% if current_page.publisher_is_draft or not current_page|is_empty_placeholder:"course_plan" %}
-                        <section class="course-detail__row course-detail__plan">
-                            <h2 class="course-detail__title">{% trans 'Course plan' %}</h2>
-
-                            {% placeholder "course_plan" or %}
-                                <p class="course-detail__empty">{% trans 'Enter here the detailed course plan.' %}</p>
-                            {% endplaceholder %}
-                        </section>
-                        {% endif %}
-                    </div>
                 {% endblock plan %}
+
                 {% endblock fragment_content %}
             </div>
 
@@ -310,13 +308,13 @@
             {% endif %}
         {% endblock team %}
 
-        {% block information %}
-            {% if current_page.publisher_is_draft or not current_page|is_empty_placeholder:"course_information" %}
+        {% block more_information %}
+            {% if current_page.publisher_is_draft or not current_page|is_empty_placeholder:"course_more_information" %}
                 <div class="course-detail__row course-detail__information">
-                    {% placeholder "course_information" %}
+                    {% placeholder "course_more_information" %}
                 </div>
             {% endif %}
-        {% endblock information %}
+        {% endblock more_information %}
 
         {% block organizations %}
             {% if current_page.publisher_is_draft or not current_page|is_empty_placeholder:"course_organizations" %}

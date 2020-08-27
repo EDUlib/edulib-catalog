@@ -470,6 +470,18 @@ class Base(StyleguideMixin, DRFMixin, RichieCoursesConfigurationMixin, Configura
                 "SectionPlugin": ["CKEditorPlugin", "SimplePicturePlugin", "GlimpsePlugin"]
             },
         },
+        "courses/cms/course_detail.html course_more_information": {
+            "name": _("Complementary information"),
+            "plugins": ["SectionPlugin"],
+            "parent_classes": {
+                "CKEditorPlugin": ["SectionPlugin"],
+                "SimplePicturePlugin": ["SectionPlugin"],
+                "GlimpsePlugin": ["SectionPlugin"],
+            },
+            "child_classes": {
+                "SectionPlugin": ["CKEditorPlugin", "SimplePicturePlugin", "GlimpsePlugin"]
+            },
+        },
         "courses/cms/course_detail.html course_license_content": {
             "name": _("License for the course content"),
             "plugins": ["LicencePlugin"],
