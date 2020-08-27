@@ -99,3 +99,25 @@ services:
     user: "${DOCKER_USER:-1000}"
     volumes:
       - ./sites/${RICHIE_SITE:-funmooc}:/app
+
+  terraform-state:
+    image: hashicorp/terraform:latest
+    env_file: env.d/aws
+    user: "${DOCKER_USER:-1000}"
+    working_dir: /app
+    volumes:
+      - ./aws/create_state_bucket:/app
+    user: ${DOCKER_USER:-1000}
+
+  terraform:
+    image: hashicorp/terraform:0.12.29
+    environment:
+      - TF_VAR_SITE=${RICHIE_SITE:-funmooc}
+      - TF_DATA_DIR=/config
+    env_file: env.d/aws
+    user: "${DOCKER_USER:-1000}"
+    working_dir: /app
+    volumes:
+      - ./aws:/app
+      - ./sites/${RICHIE_SITE:-funmooc}/aws:/config
+    user: ${DOCKER_USER:-1000}
