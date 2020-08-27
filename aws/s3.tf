@@ -1,8 +1,7 @@
 # Create S3 Bucket for media files
 resource "aws_s3_bucket" "richie_media" {
-  bucket = "${terraform.workspace}-${var.site}-media"
+  bucket = "edulib-${terraform.workspace}-${var.site}-media"
   acl    = "private"
-  region = var.aws_region
 
   cors_rule {
     allowed_headers = ["*"]
