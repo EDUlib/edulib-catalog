@@ -1,4 +1,11 @@
-{% extends "courses/cms/organization_detail.html" %}
+{% extends "richie/fullwidth.html" %}
+{% load cms_tags extra_tags i18n pagination_tags static thumbnail %}
+
+{% block meta_opengraph_contextuals %}
+    <meta property="og:title" content="{{ current_page.get_title|truncatechars:65 }}">
+    <meta property="og:url" content="{{ SITE.web_url }}{{ current_page.get_absolute_url }}">
+{% endblock meta_opengraph_contextuals %}
+
 
 {% block content %}{% spaceless %}
 {% with organization=current_page.organization header_level=2 %}
@@ -7,9 +14,7 @@
         <div class="organization-detail__row organization-detail__row--unpadded">
             <div class="organization-detail__banner">
                 {% get_placeholder_plugins "banner" as plugins or %}
-                    <img src="{% static "richie/images/empty/organization_banner.jpg" %}"
-                         class="organization-detail__banner--empty"
-                         alt="">
+                    <div class="organization-detail__empty">{% trans "Banner" %}</div>
                 {% endget_placeholder_plugins %}
                 {% blockplugin plugins.0 %}
                     <img
@@ -29,9 +34,7 @@
 
             <div class="organization-detail__logo">
                 {% get_placeholder_plugins "logo" as plugins or %}
-                    <img src="{% static "richie/images/empty/organization_logo.png" %}"
-                         class="organization-detail__logo--empty"
-                         alt="">
+                    <div class="organization-detail__empty">{% trans "Logo" %}</div>
                 {% endget_placeholder_plugins %}
                 {% blockplugin plugins.0 %}
                     <img
