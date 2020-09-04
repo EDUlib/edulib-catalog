@@ -143,3 +143,13 @@ ARG STATIC_ROOT
 RUN mkdir -p ${STATIC_ROOT}
 
 COPY --from=collector ${STATIC_ROOT} ${STATIC_ROOT}
+
+# ---- mynginximg ----
+FROM ${NGINX_IMAGE_NAME}:${NGINX_IMAGE_TAG} as ecsnginx
+
+ARG STATIC_ROOT
+
+RUN mkdir -p ${STATIC_ROOT}
+
+COPY --from=collector ${STATIC_ROOT} ${STATIC_ROOT}
+COPY ./docker/files/etc/nginx/conf.d/ecs.conf /etc/nginx/conf.d/default.conf

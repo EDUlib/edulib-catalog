@@ -58,6 +58,7 @@ bootstrap:  ## install development dependencies
 build: ## build all containers
 	$(COMPOSE) build app
 	$(COMPOSE) build nginx
+	$(COMPOSE) build ecsnginx
 	$(COMPOSE) build app-dev
 .PHONY: build
 
