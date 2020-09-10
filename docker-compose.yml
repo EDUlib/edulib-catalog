@@ -17,7 +17,7 @@ services:
     env_file:
       - "env.d/development"
     ports:
-      - "9220:9200"
+      - "9200:9200"
 
   app-dev:
     build:
