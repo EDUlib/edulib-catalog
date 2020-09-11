@@ -192,7 +192,7 @@
                     {% block description %}
                         {% if current_page.publisher_is_draft or not current_page|is_empty_placeholder:"course_description" %}
                         <div class="course-detail__row course-detail__description">
-                            <h2 class="course-detail__title">{% trans "Description" %}</h2>
+                            <h2 class="course-detail__title">{% blocktrans context "course_detail__title" %}Description{% endblocktrans %}</h2>
                             {% placeholder "course_description" %}
                         </div>
                         {% endif %}
@@ -227,7 +227,7 @@
                     {% with runs_dict=course.get_course_runs_dict %}
                         {% block runs_open %}
                             <div class="course-detail__row course-detail__runs course-detail__runs--open">
-                                <h2 class="course-detail__title">{% trans 'Course runs' %}</h2>
+                                <h2 class="course-detail__title">{% blocktrans context "course_detail__title" %}Course runs{% endblocktrans %}</h2>
                                 {% for run in runs_dict.0|add:runs_dict.1 %}
                                     {% include "courses/cms/fragment_course_run.html" %}
                                 {% empty %}
@@ -294,7 +294,7 @@
             <div class="course-detail__team course-detail__block course-detail__block--lightest">
                 <section class="section course-detail__row course-detail__team">
                     <h2 class="course-detail__title">
-                        {% trans 'Course team' %}
+                        {% blocktrans context "course_detail__title" %}Course team{% endblocktrans %}
                     </h2>
                     {% with header_level=3 %}
                         <div class="section__items section__items--team">
@@ -321,7 +321,7 @@
             <div class="course-detail__organizations course-detail__block">
                 <section class="section course-detail__row course-detail__organizations">
                     <h2 class="course-detail__title">
-                        {% trans 'Organizations' %}
+                        {% blocktrans context "course_detail__title" %}Organizations{% endblocktrans %}
                     </h2>
                     <div class="section__items section__items--organizations">
                         {% placeholder "course_organizations" or %}
