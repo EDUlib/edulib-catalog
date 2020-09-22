@@ -213,7 +213,7 @@ msgstr "Partager sur Twitter"
 #: apps/core/templates/social-networks/blogpost-badges.html:30
 #: apps/core/templates/social-networks/course-badges.html:30
 msgid "Share on Linkedin"
-msgstr ""
+msgstr "Partager sur Linkedin"
 
 #: apps/core/templates/social-networks/blogpost-badges.html:40
 #: apps/core/templates/social-networks/course-badges.html:40
@@ -244,7 +244,7 @@ msgstr "Twitter"
 #: apps/core/templates/social-networks/footer-badges.html:27
 #: apps/core/templates/social-networks/footer-badges.html:30
 msgid "Linkedin"
-msgstr ""
+msgstr "Linkedin"
 
 #: apps/courses/admin.py:77
 msgid "Course could not be found."
@@ -260,15 +260,15 @@ msgstr "Voir le dossier du classeur"
 
 #: apps/courses/cms_plugins.py:35
 msgid "Organization"
-msgstr ""
+msgstr "Institution"
 
 #: apps/courses/cms_plugins.py:60
 msgid "Organization by Category"
-msgstr ""
+msgstr "Institution par catégorie"
 
 #: apps/courses/cms_plugins.py:89
 msgid "Category"
-msgstr ""
+msgstr "Catégorie"
 
 #: apps/courses/cms_plugins.py:115
 #: apps/courses/templates/courses/cms/fragment_course_run.html:8
@@ -289,7 +289,7 @@ msgstr "Art."
 
 #: apps/courses/cms_plugins.py:208
 msgid "Program"
-msgstr ""
+msgstr "Parcours"
 
 #: apps/courses/cms_toolbars.py:49
 msgid "{!s} settings"
@@ -920,7 +920,7 @@ msgstr "Bio"
 
 #: apps/courses/settings/__init__.py:250
 msgid "Main Content"
-msgstr ""
+msgstr "Contenu Principal"
 
 #: apps/courses/settings/__init__.py:260
 msgid "Author"
@@ -1412,7 +1412,7 @@ msgstr "Rangée complète"
 
 #: plugins/glimpse/defaults.py:22
 msgid "Quote"
-msgstr ""
+msgstr "Citation"
 
 #: plugins/glimpse/models.py:22 plugins/nesteditem/models.py:20
 msgid "Variant"
@@ -1599,7 +1599,7 @@ msgstr "Schéma sénaire"
 
 #: plugins/section/defaults.py:18
 msgid "Septenary scheme"
-msgstr ""
+msgstr "Schéma septénaire"
 
 #: plugins/section/defaults.py:19
 msgid "Item tiles"
