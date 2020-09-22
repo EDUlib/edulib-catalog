@@ -15,7 +15,7 @@ services:
   elasticsearch:
     image: fundocker/openshift-elasticsearch:6.6.2
     env_file:
-      - "env.d/development"
+      - ".env"
     ports:
       - "9200:9200"
 
