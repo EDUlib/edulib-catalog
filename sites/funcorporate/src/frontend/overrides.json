@@ -1,5 +1,0 @@
-{
-  "overrides": {
-    "CourseGlimpse/CourseGlimpseFooter.tsx": "../../../../../js/components/CourseGlimpse/CourseGlimpseFooter.tsx"
-  }
-}
