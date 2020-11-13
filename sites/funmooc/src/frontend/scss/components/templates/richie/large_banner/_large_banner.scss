@@ -130,6 +130,7 @@
 
   &__title {
     @include responsive-spacer('margin-bottom', 3, $breakpoints: ('lg': 4));
+    @include font-size($extra-font-size);
     color: r-theme-val(hero-intro, title-color);
 
     @include media-breakpoint-up(lg) {
@@ -219,36 +220,6 @@
 
     &:hover {
       text-decoration: none;
-    }
-
-    // NOTE: Adjust padding so flexbox behavior push the search bar near the
-    // container bottom
-    @include media-breakpoint-up(lg) {
-      @if $r-topbar-height {
-        padding: $r-topbar-height 0 calc(3vw + 1rem);
-      } @else {
-        padding: 1rem 0 calc(3vw + 1rem);
-      }
-    }
-  }
-
-  &::after {
-    // NOTE:
-    display: none;
-
-    @include media-breakpoint-up(lg) {
-      display: block;
-      // NOTE: Flip vertically wave decoration and push it over the next element
-      bottom: calc(0.05rem - 5vw);
-      transform: scaleY(-1);
-      z-index: 5;
-    }
-  }
-
-  // NOTE: Adjust next element top padding to include the decoration height
-  @include media-breakpoint-up(lg) {
-    & + * {
-      padding-top: calc(5vw + 2rem) !important;
     }
   }
 }
