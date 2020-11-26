@@ -128,7 +128,6 @@ $r-subheader-search-title-width: 19rem !default; // aligned on computed search r
   // Aside subheader container alongside 'main' content
   &__aside {
     text-align: center;
-    padding-top: 2rem;
 
     @include media-breakpoint-up(lg) {
       @include sv-flex(1, 0, 25%);
@@ -307,7 +306,7 @@ $r-subheader-search-title-width: 19rem !default; // aligned on computed search r
   &--alternative {
     #{$subheader-selector}__container {
       position: relative;
-      padding-bottom: calc(5vw + 1.5rem) !important;
+      padding-bottom: calc(1vw + 1.5rem) !important;
       background: r-theme-val(subheader-alt, container-background);
       @if r-theme-val(subheader-alt, container-border) {
         border-top: 1px solid r-theme-val(subheader-alt, container-border);
