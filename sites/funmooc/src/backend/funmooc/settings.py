@@ -226,30 +226,6 @@ class Base(StyleguideMixin, DRFMixin, RichieCoursesConfigurationMixin, Configura
 
     # LMS
     LMS_BACKENDS = [
-        {
-            "BACKEND": values.Value(
-                "richie.apps.courses.lms.base.BaseLMSBackend",
-                environ_name="EDX_BACKEND",
-                environ_prefix=None,
-            ),
-            "JS_BACKEND": values.Value(
-                "base",
-                environ_name="EDX_JS_BACKEND",
-                environ_prefix=None,
-            ),
-            "SELECTOR_REGEX": values.Value(
-                r".*", environ_name="EDX_SELECTOR_REGEX", environ_prefix=None
-            ),
-            "JS_SELECTOR_REGEX": values.Value(
-                r".*", environ_name="EDX_JS_SELECTOR_REGEX", environ_prefix=None
-            ),
-            "JS_COURSE_REGEX": values.Value(
-                r"^(?<course_id>.*)$",
-                environ_name="EDX_JS_COURSE_REGEX",
-                environ_prefix=None,
-            ),
-            "BASE_URL": values.Value(environ_name="EDX_BASE_URL", environ_prefix=None),
-        }
     ]
 
     # Internationalization
@@ -659,6 +635,7 @@ class Base(StyleguideMixin, DRFMixin, RichieCoursesConfigurationMixin, Configura
             "name": "subjects",
             "position": 1,
             "reverse_id": "subjects",
+            "term": "categories",
         },
     ),
     (
