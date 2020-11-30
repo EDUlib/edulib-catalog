@@ -402,8 +402,8 @@ class Base(StyleguideMixin, DRFMixin, RichieCoursesConfigurationMixin, Configura
         },
         "courses/cms/course_detail.html course_introduction": {
             "name": _("Catch phrase"),
-            "plugins": ["PlainTextPlugin"],
-            "limits": {"PlainTextPlugin": 1},
+            "plugins": ["CKEditorPlugin"],
+            "limits": {"CKEditorPlugin": 1},
         },
         "courses/cms/course_detail.html course_teaser": {
             "name": _("Teaser"),
@@ -563,8 +563,8 @@ class Base(StyleguideMixin, DRFMixin, RichieCoursesConfigurationMixin, Configura
         },
         "courses/cms/blogpost_detail.html excerpt": {
             "name": _("Excerpt"),
-            "plugins": ["PlainTextPlugin"],
-            "limits": {"PlainTextPlugin": 1},
+            "plugins": ["CKEditorPlugin"],
+            "limits": {"CKEditorPlugin": 1},
         },
         "courses/cms/blogpost_detail.html body": {
             "name": _("Body"),
@@ -583,8 +583,8 @@ class Base(StyleguideMixin, DRFMixin, RichieCoursesConfigurationMixin, Configura
         },
         "courses/cms/program_detail.html program_excerpt": {
             "name": _("Excerpt"),
-            "plugins": ["PlainTextPlugin"],
-            "limits": {"PlainTextPlugin": 1},
+            "plugins": ["CKEditorPlugin"],
+            "limits": {"CKEditorPlugin": 1},
         },
         "courses/cms/program_detail.html program_body": {
             "name": _("Body"),
