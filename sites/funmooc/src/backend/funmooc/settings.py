@@ -620,101 +620,104 @@ class Base(StyleguideMixin, DRFMixin, RichieCoursesConfigurationMixin, Configura
         },
     }
 
+    RICHIE_SIMPLETEXT_CONFIGURATION = [
+    ]
+
     RICHIE_FILTERS_CONFIGURATION = [
-    (
-        "richie.apps.search.filter_definitions.NestingWrapper",
-        {
-            "name": "course_runs",
-            "filters": [
-                (
-                    "richie.apps.search.filter_definitions.AvailabilityFilterDefinition",
-                    {
-                        "human_name": _("Availability"),
-                        "is_drilldown": True,
-                        "min_doc_count": 0,
-                        "name": "availability",
-                        "position": 0,
-                    },
-                ),
-                (
-                    "richie.apps.search.filter_definitions.LanguagesFilterDefinition",
-                    {
-                        "human_name": _("Languages"),
-                        # There are too many available languages to show them all, all the time.
-                        # Eg. 200 languages, 190+ of which will have 0 matching courses.
-                        "min_doc_count": 1,
-                        "name": "languages",
-                        "position": 3,
-                        "sorting": "count",
-                    },
-                ),
-            ],
-        },
-    ),
-    (
-        "richie.apps.search.filter_definitions.IndexableMPTTFilterDefinition",
-        {
-            "human_name": _("Subjects"),
-            "is_autocompletable": True,
-            "is_searchable": True,
-            "min_doc_count": 0,
-            "name": "subjects",
-            "position": 1,
-            "reverse_id": "subjects",
-            "term": "categories",
-        },
-    ),
-    (
-        "richie.apps.search.filter_definitions.IndexableMPTTFilterDefinition",
-        {
-            "human_name": _("Host"),
-            "is_autocompletable": True,
-            "is_searchable": True,
-            "min_doc_count": 0,
-            "name": "host",
-            "position": 4,
-            "reverse_id": "host",
-            "term": "categories",
-        },
-    ),
-    (
-        "richie.apps.search.filter_definitions.IndexableMPTTFilterDefinition",
-        {
-            "human_name": _("Certificate"),
-            "is_autocompletable": True,
-            "is_searchable": True,
-            "min_doc_count": 0,
-            "name": "certificate",
-            "position": 5,
-            "reverse_id": "certificate",
-            "term": "categories",
-        },
-    ),
-    (
-        "richie.apps.search.filter_definitions.IndexableMPTTFilterDefinition",
-        {
-            "human_name": _("Organizations"),
-            "is_autocompletable": True,
-            "is_searchable": True,
-            "min_doc_count": 0,
-            "name": "organizations",
-            "position": 2,
-            "reverse_id": "organizations",
-        },
-    ),
-    (
-        "richie.apps.search.filter_definitions.IndexableFilterDefinition",
-        {
-            "human_name": _("Persons"),
-            "is_autocompletable": True,
-            "is_searchable": True,
-            "min_doc_count": 0,
-            "name": "persons",
-            "position": 6,
-            "reverse_id": "persons",
-        },
-    ),
-]
+        (
+            "richie.apps.search.filter_definitions.NestingWrapper",
+            {
+                "name": "course_runs",
+                "filters": [
+                    (
+                        "richie.apps.search.filter_definitions.AvailabilityFilterDefinition",
+                        {
+                            "human_name": _("Availability"),
+                            "is_drilldown": True,
+                            "min_doc_count": 0,
+                            "name": "availability",
+                            "position": 0,
+                        },
+                    ),
+                    (
+                        "richie.apps.search.filter_definitions.LanguagesFilterDefinition",
+                        {
+                            "human_name": _("Languages"),
+                            # There are too many available languages to show them all, all the time.
+                            # Eg. 200 languages, 190+ of which will have 0 matching courses.
+                            "min_doc_count": 1,
+                            "name": "languages",
+                            "position": 3,
+                            "sorting": "count",
+                        },
+                    ),
+                ],
+            },
+        ),
+        (
+            "richie.apps.search.filter_definitions.IndexableMPTTFilterDefinition",
+            {
+                "human_name": _("Subjects"),
+                "is_autocompletable": True,
+                "is_searchable": True,
+                "min_doc_count": 0,
+                "name": "subjects",
+                "position": 1,
+                "reverse_id": "subjects",
+                "term": "categories",
+            },
+        ),
+        (
+            "richie.apps.search.filter_definitions.IndexableMPTTFilterDefinition",
+            {
+                "human_name": _("Host"),
+                "is_autocompletable": True,
+                "is_searchable": True,
+                "min_doc_count": 0,
+                "name": "host",
+                "position": 4,
+                "reverse_id": "host",
+                "term": "categories",
+            },
+        ),
+        (
+            "richie.apps.search.filter_definitions.IndexableMPTTFilterDefinition",
+            {
+                "human_name": _("Certificate"),
+                "is_autocompletable": True,
+                "is_searchable": True,
+                "min_doc_count": 0,
+                "name": "certificate",
+                "position": 5,
+                "reverse_id": "certificate",
+                "term": "categories",
+            },
+        ),
+        (
+            "richie.apps.search.filter_definitions.IndexableMPTTFilterDefinition",
+            {
+                "human_name": _("Organizations"),
+                "is_autocompletable": True,
+                "is_searchable": True,
+                "min_doc_count": 0,
+                "name": "organizations",
+                "position": 2,
+                "reverse_id": "organizations",
+            },
+        ),
+        (
+            "richie.apps.search.filter_definitions.IndexableFilterDefinition",
+            {
+                "human_name": _("Persons"),
+                "is_autocompletable": True,
+                "is_searchable": True,
+                "min_doc_count": 0,
+                "name": "persons",
+                "position": 6,
+                "reverse_id": "persons",
+            },
+        ),
+    ]
 
     # Languages
     # - Django
