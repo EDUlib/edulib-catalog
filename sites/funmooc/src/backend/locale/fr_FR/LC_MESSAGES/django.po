@@ -1364,8 +1364,8 @@ msgid "Availability"
 msgstr "Disponibilité"
 
 #: apps/search/defaults.py:90
-msgid "Hosted by"
-msgstr "Hébergé par"
+msgid "Host"
+msgstr "Hébergeur"
 
 #: apps/search/defaults.py:103
 msgid "Certificate"
