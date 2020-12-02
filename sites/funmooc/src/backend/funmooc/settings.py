@@ -333,8 +333,8 @@ class Base(StyleguideMixin, DRFMixin, RichieCoursesConfigurationMixin, Configura
         # Footer
         "footer": {
             "name": _("Footer"),
-            "plugins": ["NestedItemPlugin"],
-            "NestedItemPlugin": ["NestedItemPlugin", "LinkPlugin"],
+            "plugins": ["NestedItemPlugin", "LinkPlugin"],
+            "NestedItemPlugin": ["LinkPlugin"],
         },
         "static_blogpost_headline": {
             "name": _("Static headline"),
@@ -349,16 +349,17 @@ class Base(StyleguideMixin, DRFMixin, RichieCoursesConfigurationMixin, Configura
             "child_classes": {
                 "SectionPlugin": [
                     "BlogPostPlugin",
-                    "CoursePlugin",
                     "CategoryPlugin",
-                    "LinkPlugin",
-                    "OrganizationPlugin",
-                    "OrganizationsByCategoryPlugin",
-                    "PersonPlugin",
+                    "CoursePlugin",
                     "CKEditorPlugin",
-                    "SectionPlugin",
-                    "NestedItemPlugin",
                     "GlimpsePlugin",
+                    "LinkPlugin",
+                    "NestedItemPlugin",
+                    "OrganizationsByCategoryPlugin",
+                    "OrganizationPlugin",
+                    "PersonPlugin",
+                    "ProgramPlugin",
+                    "SectionPlugin",
                 ],
                 "NestedItemPlugin": ["CategoryPlugin"],
             },
@@ -375,6 +376,7 @@ class Base(StyleguideMixin, DRFMixin, RichieCoursesConfigurationMixin, Configura
                 "OrganizationPlugin": ["SectionPlugin"],
                 "OrganizationsByCategoryPlugin": ["SectionPlugin"],
                 "PersonPlugin": ["SectionPlugin"],
+                "ProgramPlugin": ["SectionPlugin"],
             },
             "child_classes": {
                 "SectionPlugin": [
@@ -383,10 +385,11 @@ class Base(StyleguideMixin, DRFMixin, RichieCoursesConfigurationMixin, Configura
                     "CoursePlugin",
                     "GlimpsePlugin",
                     "LinkPlugin",
-                    "OrganizationPlugin",
-                    "OrganizationsByCategoryPlugin",
-                    "PersonPlugin",
                     "NestedItemPlugin",
+                    "OrganizationsByCategoryPlugin",
+                    "OrganizationPlugin",
+                    "PersonPlugin",
+                    "ProgramPlugin",
                 ],
                 "NestedItemPlugin": ["NestedItemPlugin", "LinkPlugin"],
             },
@@ -539,6 +542,11 @@ class Base(StyleguideMixin, DRFMixin, RichieCoursesConfigurationMixin, Configura
             "plugins": ["CKEditorPlugin"],
             "limits": {"CKEditorPlugin": 1},
         },
+        "courses/cms/person_detail.html maincontent": {
+            "name": _("Main Content"),
+            "plugins": ["CKEditorPlugin"],
+            "limits": {"CKEditorPlugin": 1},
+        },
         "courses/cms/person_detail.html organizations": {
             "name": _("Organizations"),
             "plugins": ["OrganizationPlugin"],
@@ -590,6 +598,26 @@ class Base(StyleguideMixin, DRFMixin, RichieCoursesConfigurationMixin, Configura
         "courses/cms/program_detail.html program_courses": {
             "name": _("Courses"),
             "plugins": ["CoursePlugin"],
+        },
+        "courses/cms/program_list.html maincontent": {
+            "name": _("Main content"),
+            "plugins": ["SectionPlugin"],
+            "child_classes": {
+                "SectionPlugin": [
+                    "BlogPostPlugin",
+                    "CategoryPlugin",
+                    "CoursePlugin",
+                    "GlimpsePlugin",
+                    "LinkPlugin",
+                    "OrganizationPlugin",
+                    "OrganizationsByCategoryPlugin",
+                    "PersonPlugin",
+                    "CKEditorPlugin",
+                    "SectionPlugin",
+                    "NestedItemPlugin",
+                ],
+                "NestedItemPlugin": ["CategoryPlugin"],
+            },
         },
     }
 
