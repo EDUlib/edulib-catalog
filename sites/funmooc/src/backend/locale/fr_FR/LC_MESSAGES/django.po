@@ -224,7 +224,7 @@ msgstr "Suivre un cours en ligne avec EDUlib"
 #: apps/core/templates/social-networks/course-badges.html:4
 #, python-format
 msgid "I just enrolled to the course \"%(title)s\" on EDUlib : %(url)s"
-msgstr "Je me suis juste inscrit au cours «%(title)s» sur EDUlib : %(url)s"
+msgstr "Je viens de m'inscrire au cours «%(title)s» sur EDUlib : %(url)s"
 
 #: apps/core/templates/social-networks/footer-badges.html:8
 msgid "Facebook"
