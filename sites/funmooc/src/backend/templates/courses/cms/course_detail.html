@@ -53,13 +53,7 @@
                     </h1>
                     {% endblock title %}
 
-                    <div class="subheader__teaser">
-                        {% placeholder "course_teaser" or %}
-                        <div class="empty">{% trans 'Add a video or teaser.' %}</div>
-                        {% endplaceholder %}
-                    </div>
-
-                    <div class="subheader__content subheader__content--aside">
+                    <div class="subheader__content">
                         {% if current_page.publisher_is_draft or not current_page|is_empty_placeholder:"course_introduction" %}
                             {% with header_level=3 %}
                             {% placeholder "course_introduction" or %}
@@ -95,35 +89,31 @@
                         {% endif %}
                         {% endblock synopsis %}
 
+                        {% block main_organization %}
+                        {% with main_organization=course.get_main_organization %}
+                            {% if main_organization %}
+                                {% if current_page.publisher_is_draft %}
+                                    {% if main_organization.check_publication is True %}
+                                        {% include "courses/cms/fragment_organization_main_logo.html" with organization=main_organization.public_extension %}
+                                    {% else %}
+                                        {% include "courses/cms/fragment_organization_main_logo.html" with organization=main_organization %}
+                                    {% endif %}
+                                {# If the current page is the published version, show only the organizations that are published #}
+                                {% elif main_organization.check_publication is True %}
+                                    {% include "courses/cms/fragment_organization_main_logo.html" with organization=main_organization.public_extension %}
+                                {% endif %}
+                            {% else %}
+                                {% include "courses/cms/fragment_organization_main_logo.html" with organization=None %}
+                            {% endif %}
+                        {% endwith %}
+                        {% endblock main_organization %}
                     </div>
                 </div>
 
-                <div class="subheader__aside">
-                    {% block main_organization %}
-                    {% with main_organization=course.get_main_organization %}
-                        {% if main_organization %}
-                            {% if current_page.publisher_is_draft %}
-                                {% if main_organization.check_publication is True %}
-                                    {% include "courses/cms/fragment_organization_main_logo.html" with organization=main_organization.public_extension %}
-                                {% else %}
-                                    {% include "courses/cms/fragment_organization_main_logo.html" with organization=main_organization %}
-                                {% endif %}
-                            {# If the current page is the published version, show only the organizations that are published #}
-                            {% elif main_organization.check_publication is True %}
-                                {% include "courses/cms/fragment_organization_main_logo.html" with organization=main_organization.public_extension %}
-                            {% endif %}
-                        {% else %}
-                            {% include "courses/cms/fragment_organization_main_logo.html" with organization=None %}
-                        {% endif %}
-                    {% endwith %}
-                    {% endblock main_organization %}
-
-                    {% block social_networks %}
-                        {% include "social-networks/course-badges.html" with page_title=request.current_page.get_title page_url=request.current_page.get_absolute_url %}
-                    {% endblock social_networks %}
-
-                    {% block contact %}
-                    {% endblock contact %}
+                <div class="subheader__teaser">
+                    {% placeholder "course_teaser" or %}
+                    <div class="empty">{% trans 'Add a video or teaser.' %}</div>
+                    {% endplaceholder %}
                 </div>
             </div>
         </div>
@@ -279,6 +269,12 @@
                         {% endif %}
                         {% endblock runs_archived %}
 
+                        {% block social_networks %}
+                            {% include "social-networks/course-badges.html" with page_title=request.current_page.get_title page_url=request.current_page.get_absolute_url %}
+                        {% endblock social_networks %}
+
+                        {% block contact %}
+                        {% endblock contact %}
                     {% endwith %}
                 </div>
             {% endblock runs %}
