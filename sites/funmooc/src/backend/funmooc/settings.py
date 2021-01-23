@@ -18,10 +18,8 @@ DATA_DIR = os.path.join("/", "data")
 
 def get_release():
     """Get the current release of the application.
-
     By release, we mean the release from the version.json file à la Mozilla [1]
     (if any). If this file has not been found, it defaults to "NA".
-
     [1]
     https://github.com/mozilla-services/Dockerflow/blob/master/docs/version_object.md
     """
@@ -37,7 +35,6 @@ def get_release():
 class StyleguideMixin:
     """
     Theme styleguide reference
-
     Only used to build styleguide page without the need to hardcode properties
     and values into styleguide template.
     """
@@ -118,14 +115,10 @@ class Base(StyleguideMixin, DRFMixin, RichieCoursesConfigurationMixin, Configura
     This is the base configuration every configuration (aka environnement) should inherit from. It
     is recommended to configure third-party applications by creating a configuration mixins in
     ./configurations and compose the Base configuration with those mixins.
-
     It depends on an environment variable that SHOULD be defined:
-
     * DJANGO_SECRET_KEY
-
     You may also want to override default configuration by setting the following environment
     variables:
-
     * DJANGO_SENTRY_DSN
     * RICHIE_ES_HOST
     * DB_NAME
@@ -224,7 +217,7 @@ class Base(StyleguideMixin, DRFMixin, RichieCoursesConfigurationMixin, Configura
     }
 
     # LMS
-    LMS_BACKENDS = [
+    RICHIE_LMS_BACKENDS = [
     ]
     RICHIE_COURSE_RUN_SYNC_SECRETS = values.ListValue([])
 
@@ -413,7 +406,8 @@ class Base(StyleguideMixin, DRFMixin, RichieCoursesConfigurationMixin, Configura
         },
         "courses/cms/course_detail.html course_description": {
             "name": _("About the course"),
-            "plugins": ["CKEditorPlugin", "NestedItemPlugin", "SimplePicturePlugin"],
+            "plugins": ["CKEditorPlugin"],
+            "limits": {"CKEditorPlugin": 1},
         },
         "courses/cms/course_detail.html course_skills": {
             "name": _("What you will learn"),
@@ -443,9 +437,10 @@ class Base(StyleguideMixin, DRFMixin, RichieCoursesConfigurationMixin, Configura
                 "CKEditorPlugin": ["SectionPlugin"],
                 "SimplePicturePlugin": ["SectionPlugin"],
                 "GlimpsePlugin": ["SectionPlugin"],
+                "NestedItemPlugin":["SectionPlugin"],
             },
             "child_classes": {
-                "SectionPlugin": ["CKEditorPlugin", "SimplePicturePlugin", "GlimpsePlugin"]
+                "SectionPlugin": ["CKEditorPlugin", "SimplePicturePlugin", "GlimpsePlugin","NestedItemPlugin"]
             },
         },
         "courses/cms/course_detail.html course_more_information": {
@@ -455,9 +450,10 @@ class Base(StyleguideMixin, DRFMixin, RichieCoursesConfigurationMixin, Configura
                 "CKEditorPlugin": ["SectionPlugin"],
                 "SimplePicturePlugin": ["SectionPlugin"],
                 "GlimpsePlugin": ["SectionPlugin"],
+                "NestedItemPlugin":["SectionPlugin"],
             },
             "child_classes": {
-                "SectionPlugin": ["CKEditorPlugin", "SimplePicturePlugin", "GlimpsePlugin"]
+                "SectionPlugin": ["CKEditorPlugin", "SimplePicturePlugin", "GlimpsePlugin","NestedItemPlugin"]
             },
         },
         "courses/cms/course_detail.html course_license_content": {
@@ -594,7 +590,8 @@ class Base(StyleguideMixin, DRFMixin, RichieCoursesConfigurationMixin, Configura
         },
         "courses/cms/program_detail.html program_body": {
             "name": _("Body"),
-            "excluded_plugins": ["CKEditorPlugin", "GoogleMapPlugin"],
+            "plugins": ["CKEditorPlugin"],
+            "limits": {"CKEditorPlugin": 1},
         },
         "courses/cms/program_detail.html program_courses": {
             "name": _("Courses"),
@@ -646,8 +643,8 @@ class Base(StyleguideMixin, DRFMixin, RichieCoursesConfigurationMixin, Configura
                         "richie.apps.search.filter_definitions.LanguagesFilterDefinition",
                         {
                             "human_name": _("Languages"),
-                            # There are too many available languages to show them all, all the time.
-                            # Eg. 200 languages, 190+ of which will have 0 matching courses.
+                            # There are too many available languages to show them all, all the
+                            # time. Eg. 200 languages, 190+ of which will have 0 matching courses.
                             "min_doc_count": 1,
                             "name": "languages",
                             "position": 3,
@@ -706,6 +703,7 @@ class Base(StyleguideMixin, DRFMixin, RichieCoursesConfigurationMixin, Configura
                 "name": "organizations",
                 "position": 2,
                 "reverse_id": "organizations",
+                "term": "organizations",
             },
         ),
         (
@@ -828,7 +826,6 @@ class Base(StyleguideMixin, DRFMixin, RichieCoursesConfigurationMixin, Configura
     def RELEASE(self):
         """
         Return the release information.
-
         Delegate to the module function to enable easier testing.
         """
         return get_release()
@@ -864,7 +861,6 @@ class Base(StyleguideMixin, DRFMixin, RichieCoursesConfigurationMixin, Configura
 class Development(Base):
     """
     Development environment settings
-
     We set DEBUG to True and configure the server to respond from all hosts.
     """
 
@@ -879,17 +875,14 @@ class Test(Base):
 class ContinuousIntegration(Test):
     """
     Continous Integration environment settings
-
     nota bene: it should inherit from the Test environment.
     """
 
 
 class Production(Base):
     """Production environment settings
-
     You must define the DJANGO_ALLOWED_HOSTS environment variable in Production
     configuration (and derived configurations):
-
     DJANGO_ALLOWED_HOSTS="foo.com,foo.fr"
     """
 
@@ -928,7 +921,6 @@ class Production(Base):
 class Feature(Production):
     """
     Feature environment settings
-
     nota bene: it should inherit from the Production environment.
     """
 
@@ -938,7 +930,6 @@ class Feature(Production):
 class Staging(Production):
     """
     Staging environment settings
-
     nota bene: it should inherit from the Production environment.
     """
 
@@ -948,7 +939,6 @@ class Staging(Production):
 class PreProduction(Production):
     """
     Pre-production environment settings
-
     nota bene: it should inherit from the Production environment.
     """
 
